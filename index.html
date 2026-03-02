@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>সুন্নাহ বুক কর্নার | প্রিমিয়াম কালেকশন</title>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --primary: #b8860b;       /* gold / premium */
+    --primary-dark: #9c6f00;
+    --accent: #1a1a1a;
+    --bg: #fdfdfd;
+    --card-bg: rgba(255,255,255,0.92);
+    --text: #111827;
+    --gray: #4b5563;
+    --shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --card-bg: rgba(30,41,59,0.9);
+    --text: #f1f5f9;
+    --gray: #94a3b8;
+    --shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: all 0.4s ease;
+    line-height: 1.6;
+  }
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: sticky;
+    top: 50;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+  }
+
+.hero {
+  position: relative;
+  height: 180px;              /* এখানে height ঠিক করো */
+  overflow: hidden;
+  background: linear-gradient(to bottom, var(--accent), #2d3748);
+  outline: 3px solid red;
+}
+
+.slides {
+  position: relative;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+  background-size: cover;
+  background-position: center;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.45),
+    rgba(0,0,0,0.75)
+  );
+}
+
+.slide-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 0 1rem;
+  z-index: 2;
+}
+
+.slide-content h2 {
+  font-size: 24px;           /* clamp বাদ দিলাম height ছোট রাখতে */
+  margin-bottom: 6px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-shadow: 0 3px 15px rgba(0,0,0,0.6);
+}
+
+.slide-content p {
+  font-size: 14px;
+  max-width: 90%;
+  opacity: 0.95;
+}
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s;
+  }
+  .prev:hover, .next:hover {
+    background: var(--primary);
+    transform: translateY(-50%) scale(1.12);
+  }
+  .prev { left: 18px; }
+  .next { right: 18px; }
+  .dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  .dot.active {
+    background: var(--primary);
+    transform: scale(1.4);
+    box-shadow: 0 0 0 4px rgba(184,134,11,0.3);
+  }
+
+  .container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 0.6rem;
+  }
+  h2.section-title {
+    text-align: center;
+    font-size: 2.6rem;
+    margin: 3.5rem 0 2.5rem;
+    color: var(--primary);
+    font-weight: 700;
+    position: relative;
+  }
+  h2.section-title::after {
+    content: '';
+    width: 100px;
+    height: 4px;
+    background: var(--primary);
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.8rem;
+    padding-bottom: 4rem;
+  }
+
+  .card {
+    position: relative;
+    background: var(--card-bg);
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+    border: 1px solid #dc2626;           /* লাল চিকন বর্ডার */
+    transition: all 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .card:hover {
+    transform: translateY(-14px);
+    box-shadow: 0 24px 60px rgba(184,134,11,0.18);
+    border-color: #ef4444;                /* হোভারে হালকা লাল */
+  }
+
+  .card img {
+    width: 100%;
+    height: 220px;                        /* কমানো উচ্চতা */
+    object-fit: cover;
+    transition: transform 0.7s ease;
+
+  }
+  .card:hover img {
+    transform: scale(1.09);
+  }
+
+  .discount-badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: var(--primary);
+    color: #111;
+    padding: 6px 13px;
+    font-weight: 700;
+    border-radius: 50px;
+    font-size: 0.50rem;
+    box-shadow: 0 4px 12px rgba(184,134,11,0.3);
+    z-index: 2;
+  }
+
+  .info {
+    padding: 1.2rem 1.3rem 1.5rem;
+    text-align: center;
+  }
+  .info h3 {
+    font-size: 1.28rem;
+    margin-bottom: 0.65rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .price {
+    font-size: 1.68rem;
+    font-weight: 800;
+    color:black;
+  }
+  .old-price {
+    color: var(--gray);
+    text-decoration: line-through;
+    margin-left: 0.8rem;
+    font-size: 1.15rem;
+  }
+  .btn-order {
+    background: linear-gradient(135deg, var(--primary), red);
+    color: red;
+    border: none;
+    padding: 0.82rem 1.8rem;
+    border-radius: 9px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1.1rem;
+    transition: all 0.35s;
+    box-shadow: 0 8px 24px rgba(184,134,11,0.25);
+  }
+  .btn-order:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(184,134,11,0.35);
+  }
+
+ /* ===== MODAL FULL SCREEN CLEAN VERSION ===== */
+
+.modal{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;   /* নিচ থেকে উঠবে */
+}
+
+.modal-content{
+  background: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  max-height: 93vh;      /* পুরো স্ক্রিন ঢাকবে না */
+  overflow-y: auto;
+  box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
+}
+
+/* স্ক্রল সুন্দর করার জন্য */
+.modal-content::-webkit-scrollbar{
+  width: 5px;
+}
+.modal-content::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 10px;
+}
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.88) translateY(30px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .close {
+    float: right;
+    font-size: 2.4rem;
+    cursor: pointer;
+    color: var(--gray);
+  }
+  .close:hover { color: var(--primary); }
+  form label {
+    display: block;
+    margin: 1.3rem 0 0.6rem;
+    font-weight: 600;
+    color:#1f2937;
+  }
+  form input, form select, form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(184,134,11,0.2);
+    border-radius: 14px;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--text);
+    transition: all 0.3s;
+  }
+  form input:focus, form select:focus, form textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(184,134,11,0.15);
+  }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--primary), red);
+    color: #111;
+    border: none;
+    padding: 1.1rem;
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 14px;
+    font-size: 1.22rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.35s;
+  }
+  .btn-submit:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(184,134,11,0.3);
+  }
+
+  .theme-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--primary);
+    color: #111;
+    border: none;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    z-index: 99;
+    transition: all 0.3s;
+  }
+  .theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+
+  /* ────────────────────────────────────────────────
+     মিডিয়া কোয়েরি – মোবাইল + ট্যাবলেট অপটিমাইজেশন
+  ──────────────────────────────────────────────── */
+  @media (max-width: 1023px) {
+    .products {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+  }
+
+
+    .products {
+      grid-template-columns: repeat(2, 1fr);   /* ২টা পাশাপাশি */
+      gap: 1.6rem 1.2rem;
+    }
+    .card img {
+      height: 180px;          /* মোবাইলে আরও কম */
+    }
+    .info {
+      padding: 1.1rem 1rem 1.3rem;
+    }
+    .info h3 {
+      font-size: 1.18rem;
+      margin-bottom: 0.55rem;
+    }
+    .price {
+      font-size: 1.55rem;
+    }
+    .old-price {
+      font-size: 1.05rem;
+    }
+    .btn-order {
+      padding: 0.78rem 1.6rem;
+      font-size: 0.96rem;
+      margin-top: 0.95rem;
+    }
+    h2.section-title {
+      font-size: 2.1rem;
+      margin: 2.6rem 0 1.8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .products {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem 1rem;
+    }
+    .card img {
+      height: 160px;        /* খুব ছোট স্ক্রিন */
+    }
+    .info {
+      padding: 1rem 0.9rem 1.2rem;
+    }
+  }
+
+.footer{
+  background:#000;
+  color:#fff;
+  padding:40px 20px 20px;
+}
+
+.footer-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+
+.footer h3{
+  margin-bottom:15px;
+  font-size:18px;
+}
+
+.footer p{
+  margin-bottom:10px;
+  font-size:14px;
+  color:#ccc;
+}
+
+.footer a{
+  color:#ccc;
+  text-decoration:none;
+}
+
+.footer a:hover{
+  color:#fff;
+}
+
+.social-icons{
+  display:flex;
+  gap:12px;
+  margin-top:10px;
+}
+
+.social-icons a{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#111;
+  font-size:18px;
+  transition:.3s;
+}
+
+.social-icons a:hover{
+  transform:scale(1.1);
+}
+
+.social-icons a:nth-child(1){ background:#1877f2; }
+.social-icons a:nth-child(2){ background:#ff0000; }
+.social-icons a:nth-child(3){ background:#e1306c; }
+.social-icons a:nth-child(4){ background:#000; }
+.social-icons a:nth-child(5){ background:#25d366; }
+
+.footer-bottom{
+  text-align:center;
+  margin-top:30px;
+  padding-top:20px;
+  border-top:1px solid #333;
+  font-size:14px;
+}
+
+
+/* ===== HEADER STYLE ===== */
+
+.top-header{
+  background:#black;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+
+.menu-icon{
+  font-size:20px;
+  cursor:pointer;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:700;
+}
+
+.logo span{
+  color:#e60000;
+}
+
+.header-icons{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  font-size:18px;
+}
+
+.header-icons i{
+  cursor:pointer;
+}
+
+.cart-icon{
+  position:relative;
+}
+
+.cart-count{
+  position:absolute;
+  top:-6px;
+  right:-8px;
+  background:#000;
+  color:#fff;
+  font-size:11px;
+  width:18px;
+  height:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+}
+
+/* 🔽 নিচে বসাও */
+.extra-order-buttons {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.extra-order-buttons a {
+  text-decoration: none;
+  padding: 14px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 15px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.wa-btn { background: #25d366; }
+.ms-btn { background: #1877f2; }
+.call-btn { background: #0f9d8a; }
+
+.extra-order-buttons a:hover {
+  transform: scale(1.03);
+}
+
+/* SIDE MENU STYLE */
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  z-index: 2000;
+  padding-top: 20px;
+}
+
+.side-menu a {
+  display: block;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  font-weight: 500;
+}
+
+.side-menu a:hover {
+  background: #f5f5f5;
+}
+
+.side-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 1500;
+}
+
+/* SEARCH BOX */
+.search-box{
+  display:none;
+  padding:15px;
+  background:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.search-box input{
+  width:100%;
+  padding:12px 15px;
+  border:2px solid #e60000;
+  border-radius:30px;
+  font-size:16px;
+  outline:none;
+}
+
+/* সার্চ বক্স ফুল উইডথ নিচে নামানো */
+.search-box,
+.search-container{
+  position: absolute;
+  top: 60px;   /* হেডারের নিচে নামাবে */
+  left: 0;
+  width: 100%;
+  background: #fff;
+  padding: 15px;
+  z-index: 999;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ইনপুট পুরো চওড়া */
+.search-box input,
+.search-container input{
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: 2px solid #e60000;
+  font-size: 16px;
+}
+
+.header-icons a{
+  color: white;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ======= HEADER START ======= -->
+<header class="top-header">
+
+
+<!-- SEARCH BAR START -->
+<div class="search-box" id="searchBox">
+  <input type="text" id="searchInput" placeholder="Search products...">
+</div>
+<!-- SEARCH BAR END -->
+
+  <div class="menu-icon">
+   <i class="fas fa-bars" onclick="openMenu()"></i>
+  </div>
+
+  <div class="logo">
+    Sunnah Book<span>Corner</span>
+  </div>
+
+  <div class="header-icons">
+   <i class="fas fa-search" id="searchIcon"></i>
+   <a href="tel:01933932475">
+  <i class="fas fa-phone"></i>
+</a>
+    <i class="far fa-user"></i>
+
+    <div class="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count">1</span>
+    </div>
+  </div>
+
+</header>
+<!-- ======= HEADER END ======= -->
+
+<header>
+  <h1></h1>
+</header>
+
+<div class="hero">
+  <div class="slides">
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&q=80&w=2000');">
+      <div class="slide-content">
+        <h2>প্রিমিয়াম কালেকশন</h2>
+        <p>এখনই আবিষ্কার করুন • এক্সক্লুসিভ অফার • লিমিটেড এডিশন</p>
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1607082349566-187342859522?auto=format&fit=crop&q=80&w=2000');">
+      <div class="slide-content">
+        <h2>লাক্সারি লাইফস্টাইল</h2>
+        <p>উচ্চমানের পণ্য • দারুণ দামে • আপনার জন্য</p>
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=2000');">
+      <div class="slide-content">
+        <h2>এক্সক্লুসিভ ডিল</h2>
+        <p>সেরা ব্র্যান্ড • প্রিমিয়াম কোয়ালিটি • আজই অর্ডার</p>
+      </div>
+    </div>
+  </div>
+<!-- SIDE MENU -->
+<div id="sideMenu" class="side-menu">
+
+  <div class="side-header">
+    <span>Menu</span>
+    <i class="fas fa-times" onclick="closeMenu()"></i>
+  </div>
+
+  <a href="#">Home</a>
+  <a href="#">BABY CARE</a>
+  <a href="#">HOME & KITCHEN</a>
+  <a href="#">GARDEN & OUTDOOR</a>
+
+</div>
+
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+  <button class="prev"><i class="fas fa-chevron-left"></i></button>
+  <button class="next"><i class="fas fa-chevron-right"></i></button>
+
+  <div class="dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</div>
+
+<div class="container">
+  <h2 class="section-title">আমাদের ফিচার্ড প্রোডাক্ট</h2>
+
+  <div class="products" id="products-list"></div>
+</div>
+
+<div class="modal" id="orderModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 style="text-align:center; color:var(--primary); margin-bottom:1.5rem;">অর্ডার কনফার্ম করুন</h2>
+    <p id="selectedProduct" style="text-align:center; font-size:1.4rem; font-weight:600; margin-bottom:2rem;"></p>
+
+    <form id="orderForm">
+      <label>আপনার নাম *</label>
+      <input type="text" id="name" required>
+
+      <label>মোবাইল নম্বর *</label>
+      <input type="tel" id="phone" required>
+
+      <label>জেলা *</label>
+    
+     
+<input type="text" id="district">
+
+      <label>উপজেলা *</label>
+      <input type="text" id="upazila" required>
+
+      <label>থানা *</label>
+      <input type="text" id="thana" required>
+
+      <label>ইউনিয়ন / ওয়ার্ড *</label>
+      <input type="text" id="union" required>
+
+      <label>বিস্তারিত ঠিকানা *</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <button type="submit" class="btn-submit">অর্ডার প্লেস করুন</button>
+
+<!-- 🔽 এখানে বসাবে (submit বাটনের নিচে) -->
+<div class="extra-order-buttons">
+
+  <a href="https://wa.me/8801841650668" target="_blank" class="wa-btn">
+    <i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন
+  </a>
+
+  <a href="https://m.me/yourpageusername" target="_blank" class="ms-btn">
+    <i class="fab fa-facebook-messenger"></i> Messenger এ অর্ডার করুন
+  </a>
+
+  <a href="tel:01841650668" class="call-btn">
+    <i class="fas fa-phone"></i> কল করুন - 01841650668
+  </a>
+
+</div>
+    </form>
+  </div>
+</div>
+
+<button class="theme-toggle" id="themeToggle">
+  <i class="fas fa-moon"></i>
+</button>
+
+<!-- Firebase SDK (শুধু এটাই যোগ করা) -->
+<script type="module">
+
+
+
+/* ========= NO HIDE PRIORITY SEARCH ========= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const searchInput = document.getElementById("searchInput");
+  const container = document.getElementById("products-list");
+
+  if(!searchInput || !container) return;
+
+  searchInput.addEventListener("input", () => {
+
+    const keyword = searchInput.value.toLowerCase().trim();
+
+    const cards = Array.from(container.querySelectorAll(".card"));
+
+    cards.sort((a, b) => {
+
+      const nameA = a.querySelector("h3").innerText.toLowerCase();
+      const nameB = b.querySelector("h3").innerText.toLowerCase();
+
+      const scoreA = getScore(nameA, keyword);
+      const scoreB = getScore(nameB, keyword);
+
+      return scoreA - scoreB;   // কম স্কোর মানে বেশি ম্যাচ
+    });
+
+
+
+    // শুধু order বদলাবে
+    cards.forEach(card => container.appendChild(card));
+
+  });
+
+});
+
+
+function getScore(name, keyword){
+
+  if(keyword === "") return 3;
+
+  if(name.startsWith(keyword)) return 0;   // সবচেয়ে আগে
+
+  if(name.includes(keyword)) return 1;     // পরে
+
+  return 2;                                // মিল নাই — নিচে যাবে
+}
+
+/* ================= FIREBASE IMPORT ================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { 
+  getFirestore, 
+  collection, 
+  addDoc, 
+  getDocs, 
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* ================= FIREBASE CONFIG ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyCa3qjuHUkFJwOEv1Cbp-E0AIkihCW4zKY",
+  authDomain: "sunnah-book-corner.firebaseapp.com",
+  projectId: "sunnah-book-corner",
+  storageBucket: "sunnah-book-corner.firebasestorage.app",
+  messagingSenderId: "728093683205",
+  appId: "1:728093683205:web:198063ce6b85f07adeb66c"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ================= THEME TOGGLE ================= */
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+
+themeToggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+});
+
+/* ================= SLIDER ================= */
+let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const total = slides.length;
+
+function showSlide(n) {
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  slides[n].classList.add('active');
+  dots[n].classList.add('active');
+  slideIndex = n;
+}
+
+function next() { showSlide((slideIndex + 1) % total); }
+function prev() { showSlide((slideIndex - 1 + total) % total); }
+
+document.querySelector('.next').onclick = next;
+document.querySelector('.prev').onclick = prev;
+dots.forEach((dot, i) => dot.onclick = () => showSlide(i));
+setInterval(next, 5000);
+
+/* ================= PRODUCTS ================= */
+
+let products = [];
+let selectedId = null;
+
+async function loadProducts() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "products"));
+    products = [];
+    querySnapshot.forEach((docSnap) => {
+      products.push({ id: docSnap.id, ...docSnap.data() });
+    });
+    render();
+  } catch (error) {
+    console.error("Product Load Error:", error);
+  }
+}
+
+
+
+function render() {
+  const cont = document.getElementById('products-list');
+  cont.innerHTML = '';
+
+  products.forEach((p, index) => {
+    const old = Math.round(p.price / (1 - p.discount / 100));
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="discount-badge">-${p.discount}% OFF</div>
+      <img src="${p.image}" alt="${p.name}">
+      <div class="info">
+        <h3>${p.name}</h3>
+        <div>
+          <span class="price">৳ ${p.price}</span>
+          <span class="old-price">৳ ${old}</span>
+        </div>
+        <button class="btn-order" style="color:white;">অর্ডার করুন</button>
+      </div>
+    `;
+
+    card.querySelector(".btn-order").addEventListener("click", () => openOrder(p.id));
+
+    cont.appendChild(card);
+    setTimeout(() => card.classList.add('visible'), 150 * index);
+  });
+}
+
+function openOrder(id) {
+  selectedId = id;
+  const prod = products.find(p => p.id == id);
+  if (prod) {
+    document.getElementById('selectedProduct').innerText =
+      `${prod.name} — ৳ ${prod.price} (ছাড় ${prod.discount}%)`;
+    document.getElementById('orderModal').style.display = 'flex';
+  }
+}
+
+window.closeModal = function() {
+  document.getElementById('orderModal').style.display = 'none';
+  document.getElementById('orderForm').reset();
+};
+
+/* ================= ORDER SUBMIT ================= */
+
+document.getElementById('orderForm').addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const prod = products.find(p => p.id == selectedId);
+  if (!prod) return alert("পণ্য পাওয়া যায়নি!");
+
+  const order = {
+    productId: selectedId,
+    productName: prod.name,
+    price: prod.price,
+    discount: prod.discount,
+    name: document.getElementById('name').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    district: document.getElementById('district').value,
+    upazila: document.getElementById('upazila').value.trim(),
+    thana: document.getElementById('thana').value.trim(),
+    union: document.getElementById('union').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    date: new Date().toLocaleString('bn-BD'),
+    createdAt: serverTimestamp()   // 🔥 খুব গুরুত্বপূর্ণ
+  };
+
+  try {
+    await addDoc(collection(db, "orders"), order);
+    alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
+    closeModal();
+  } catch (error) {
+    console.error("Order Error:", error);
+    alert(error.message);
+  }
+});
+
+loadProducts();
+
+</script>
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <h3>Need Help?</h3>
+      <p><i class="fas fa-phone"></i> 01841650668</p>
+      <p><i class="fas fa-envelope"></i> support@yourdomain.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> আপনার ঠিকানা এখানে</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Get in Touch</h3>
+      <div class="social-icons">
+        <a href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://youtube.com/yourchannel" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://instagram.com/yourid" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://tiktok.com/@yourid" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/8801XXXXXXXXX" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h3>Related Page</h3>
+      <p><a href="#">Terms & Condition</a></p>
+      <p><a href="#">Returns & Replacement Policy</a></p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Your Brand. All Rights Reserved
+  </div>
+</footer>
+<script>
+function openMenu() {
+  document.getElementById("sideMenu").style.left = "0";
+  document.getElementById("overlay").style.display = "block";
+}
+
+function closeMenu() {
+  document.getElementById("sideMenu").style.left = "-260px";
+  document.getElementById("overlay").style.display = "none";
+}
+
+/* SEARCH TOGGLE */
+const searchIcon = document.getElementById("searchIcon");
+const searchBox = document.getElementById("searchBox");
+const searchInput = document.getElementById("searchInput");
+
+searchIcon.addEventListener("click", () => {
+  if(searchBox.style.display === "block"){
+    searchBox.style.display = "none";
+  } else {
+    searchBox.style.display = "block";
+    searchInput.focus();
+  }
+});
+
+/* PRODUCT SEARCH */
+searchInput.addEventListener("keyup", (e) => {
+  const value = e.target.value.toLowerCase();
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(value)
+  );
+
+  renderFiltered(filtered);
+});
+
+function renderFiltered(data){
+  const cont = document.getElementById('products-list');
+  cont.innerHTML = '';
+
+  data.forEach((p, index) => {
+    const old = Math.round(p.price / (1 - p.discount / 100));
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="discount-badge">-${p.discount}% OFF</div>
+      <img src="${p.image}" alt="${p.name}">
+      <div class="info">
+        <h3>${p.name}</h3>
+        <div>
+          <span class="price">৳ ${p.price}</span>
+          <span class="old-price">৳ ${old}</span>
+        </div>
+        <button class="btn-order" style="color:white;">অর্ডার করুন</button>
+      </div>
+    `;
+
+    card.querySelector(".btn-order").addEventListener("click", () => openOrder(p.id));
+    cont.appendChild(card);
+  });
+}
+</script>
+
+
+</body>
+  </html>
