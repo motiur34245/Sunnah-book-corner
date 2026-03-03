@@ -78,10 +78,82 @@ button{
 button:hover{
   opacity:0.9;
 }
+
+.close-btn{
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  background: #ffffff;
+  color: #333;
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 9999;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover{
+  background: #f1f1f1;
+  transform: scale(1.08);
+}
+
+.extra-buttons{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn{
+  display: block;
+  text-align: center;
+  padding: 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  transition: 0.2s ease;
+}
+
+/* WhatsApp */
+.whatsapp{
+  background: #25D366;
+}
+
+.whatsapp:hover{
+  background: #1ebe5d;
+}
+
+/* Messenger */
+.messenger{
+  background: #1877F2;
+}
+
+.messenger:hover{
+  background: #0f65d9;
+}
+
+/* Call */
+.call{
+  background: #0f9d58;
+}
+
+.call:hover{
+  background: #0c7f47;
+}
 </style>
 </head>
 
 <body>
+<a href="index.html" class="close-btn">✕</a>
 
 <div class="container">
   <h1 id="title">Loading...</h1>
@@ -93,10 +165,10 @@ button:hover{
 
   <form id="orderForm">
 
-    <label>আপনার নাম *</label>
+ <label>আপনার নাম *</label> 
     <input type="text" id="name" required>
 
-    <label>মোবাইল নম্বর *</label>
+   <label>মোবাইল নম্বর *</label>
     <input type="tel" id="phone" required>
 
     <label>জেলা *</label>
@@ -115,7 +187,21 @@ button:hover{
     <textarea id="address" rows="3" required></textarea>
 
     <button type="submit">অর্ডার প্লেস করুন</button>
+<div class="extra-buttons">
 
+  <a href="https://wa.me/8801770019872" target="_blank" class="btn whatsapp">
+    WhatsApp এ অর্ডার করুন
+  </a>
+
+  <a href="https://m.me/yourusername" target="_blank" class="btn messenger">
+    Messenger এ অর্ডার করুন
+  </a>
+
+  <a href="tel:01770019872" class="btn call">
+    কল করুন - 01770019872
+  </a>
+
+</div>
   </form>
 
 </div>
@@ -148,9 +234,16 @@ const db = getFirestore(app);
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get("id");
 
-if(!productId){
-  document.body.innerHTML = "<h2>Product ID পাওয়া যায়নি</h2>";
-}
+
+
+
+
+
+
+
+
+
+
 
 let currentProduct = null;
 
@@ -211,4 +304,4 @@ document.getElementById("orderForm").addEventListener("submit", async (e)=>{
 </script>
 
 </body>
-  </html>
+</html>
