@@ -234,43 +234,51 @@ const db = getFirestore(app);
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get("id");
 
-
-
-
-
-
-
-
-
-
-
-
 let currentProduct = null;
 
-const docRef = doc(db, "products", productId);
+/* ================= LOAD PRODUCT ================= */
 
-getDoc(docRef).then((docSnap) => {
+if(productId){
 
-  if (!docSnap.exists()) {
-    document.body.innerHTML = "<h2>Product Not Found</h2>";
-    return;
-  }
+  const docRef = doc(db, "products", productId);
 
-  const p = docSnap.data();
-  currentProduct = p;
+  getDoc(docRef).then((docSnap) => {
 
-  document.getElementById("title").innerText = p.name;
-  document.getElementById("image").src = p.image;
-  document.getElementById("price").innerText = "৳ " + p.price;
-  document.getElementById("desc").innerText = p.description;
+    if (!docSnap.exists()) {
+      document.body.innerHTML = "<h2>Product Not Found</h2>";
+      return;
+    }
 
-});
+    const p = docSnap.data();
+    currentProduct = p;
 
-document.getElementById("orderForm").addEventListener("submit", async (e)=>{
+    document.getElementById("title").innerText = p.name;
+    document.getElementById("image").src = p.image;
+    document.getElementById("price").innerText = "৳ " + p.price;
+    document.getElementById("desc").innerText = p.description || "";
+
+  });
+
+}
+
+/* ================= ORDER SUBMIT ================= */
+
+document.getElementById("orderForm")
+.addEventListener("submit", async (e)=>{
+
   e.preventDefault();
 
   if(!currentProduct){
     alert("Product load হয়নি");
+    return;
+  }
+
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
+
+  if(!name || !phone || !address){
+    alert("নাম, মোবাইল এবং ঠিকানা অবশ্যই পূরণ করুন");
     return;
   }
 
@@ -279,13 +287,13 @@ document.getElementById("orderForm").addEventListener("submit", async (e)=>{
     productName: currentProduct.name,
     price: currentProduct.price,
     discount: currentProduct.discount || 0,
-    name: document.getElementById('name').value.trim(),
-    phone: document.getElementById('phone').value.trim(),
-    district: document.getElementById('district').value.trim(),
-    upazila: document.getElementById('upazila').value.trim(),
-    thana: document.getElementById('thana').value.trim(),
-    union: document.getElementById('union').value.trim(),
-    address: document.getElementById('address').value.trim(),
+    name: name,
+    phone: phone,
+    district: "নেই",
+    upazila: "নেই",
+    thana: "নেই",
+    union: "নেই",
+    address: address,
     date: new Date().toLocaleString('bn-BD'),
     createdAt: serverTimestamp()
   };
@@ -294,9 +302,10 @@ document.getElementById("orderForm").addEventListener("submit", async (e)=>{
     await addDoc(collection(db, "orders"), order);
     alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
     e.target.reset();
-  }catch(error){
-    alert("অর্ডার করতে সমস্যা হয়েছে");
+  }
+  catch(error){
     console.error(error);
+    alert("অর্ডার করতে সমস্যা হয়েছে");
   }
 
 });
