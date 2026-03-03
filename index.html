@@ -212,13 +212,12 @@
     border-color: #ef4444;                /* হোভারে হালকা লাল */
   }
 
-  .card img {
-    width: 100%;
-    height: 220px;                        /* কমানো উচ্চতা */
-    object-fit: cover;
-    transition: transform 0.7s ease;
-
-  }
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;   /* ✅ ক্রপ হবে না */
+  background: #fff;      /* ফাঁকা থাকলে সাদা দেখাবে */
+}
   .card:hover img {
     transform: scale(1.09);
   }
@@ -681,6 +680,53 @@
   color: white;
   text-decoration: none;
 }
+
+/* MODAL ভিতরের footer full width fix */
+
+.modal-content .footer{
+  margin-left:-20px;
+  margin-right:-20px;
+  margin-bottom:-20px;
+  width:calc(100% + 40px);
+  border-radius:0;
+}
+
+
+
+/* ===== MODAL PRODUCT PREVIEW ===== */
+
+.modal-product-preview{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.modal-product-preview img{
+  width:100%;
+  max-height:280px;
+  object-fit:cover;
+  border-radius:15px;
+  margin-bottom:15px;
+}
+
+.modal-product-desc{
+  background:#f5f5f5;
+  padding:12px;
+  border-radius:10px;
+  font-size:14px;
+  color:#333;
+  text-align:left;
+}
+
+#modalProductDesc{
+  margin:15px 0;
+  font-size:14px;
+  line-height:1.6;
+  white-space:pre-line;   /* লাইন ব্রেক ঠিক রাখবে */
+  word-break:break-word;  /* লম্বা লেখা ভাঙবে */
+}
+
+
+
 </style>
 </head>
 <body>
@@ -705,7 +751,7 @@
 
   <div class="header-icons">
    <i class="fas fa-search" id="searchIcon"></i>
-   <a href="tel:01933932475">
+   <a href="tel:01770019872">
   <i class="fas fa-phone"></i>
 </a>
     <i class="far fa-user"></i>
@@ -780,7 +826,19 @@
 <div class="modal" id="orderModal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
-    <h2 style="text-align:center; color:var(--primary); margin-bottom:1.5rem;">অর্ডার কনফার্ম করুন</h2>
+   
+<!-- 🔥 PRODUCT PREVIEW START -->
+<div class="modal-product-preview">
+  <img id="modalProductImage" src="" alt="Product Image">
+  <div class="modal-product-desc">
+    <p id="modalProductDesc"></p>
+  </div>
+</div>
+<!-- 🔥 PRODUCT PREVIEW END -->
+
+
+
+ <h2 style="text-align:center; color:var(--primary); margin-bottom:1.5rem;">অর্ডার কনফার্ম করুন</h2>
     <p id="selectedProduct" style="text-align:center; font-size:1.4rem; font-weight:600; margin-bottom:2rem;"></p>
 
     <form id="orderForm">
@@ -790,19 +848,19 @@
       <label>মোবাইল নম্বর *</label>
       <input type="tel" id="phone" required>
 
-      <label>জেলা *</label>
+   <!--   <label>জেলা *</label>
     
      
 <input type="text" id="district">
 
       <label>উপজেলা *</label>
-      <input type="text" id="upazila" required>
+      <input type="text" id="upazila" >
 
       <label>থানা *</label>
-      <input type="text" id="thana" required>
+      <input type="text" id="thana" >
 
       <label>ইউনিয়ন / ওয়ার্ড *</label>
-      <input type="text" id="union" required>
+      <input type="text" id="union" > -->
 
       <label>বিস্তারিত ঠিকানা *</label>
       <textarea id="address" rows="3" required></textarea>
@@ -812,7 +870,7 @@
 <!-- 🔽 এখানে বসাবে (submit বাটনের নিচে) -->
 <div class="extra-order-buttons">
 
-  <a href="https://wa.me/8801841650668" target="_blank" class="wa-btn">
+  <a href="https://wa.me/8801770019872" target="_blank" class="wa-btn">
     <i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন
   </a>
 
@@ -820,12 +878,51 @@
     <i class="fab fa-facebook-messenger"></i> Messenger এ অর্ডার করুন
   </a>
 
-  <a href="tel:01841650668" class="call-btn">
-    <i class="fas fa-phone"></i> কল করুন - 01841650668
+  <a href="tel:01770019872" class="call-btn">
+    <i class="fas fa-phone"></i> কল করুন - 01770019872
   </a>
 
 </div>
     </form>
+
+
+
+<!-- ===== MODAL FOOTER START ===== -->
+<div class="footer">
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <h3>Need Help?</h3>
+      <p><i class="fas fa-phone"></i> 01770019872</p>
+      <p><i class="fas fa-envelope"></i>motiur34245@gmail.com</p>
+      <p><i class="fas fa-map-marker-alt"></i>টেপামধুপুর কাউনিয়া রংপুর </p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Get in Touch</h3>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61583997375262"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/8801770019872"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SIMPLE IMAGE VIEW -->
+<div id="imgPreview" class="img-preview">
+  <span onclick="closePreview()" class="close-preview">&times;</span>
+  <img id="previewImage">
+</div>
+
+
+
+
+
+<!-- ===== MODAL FOOTER END ===== -->
   </div>
 </div>
 
@@ -836,6 +933,126 @@
 <!-- Firebase SDK (শুধু এটাই যোগ করা) -->
 <script type="module">
 
+/* ===== ORDER VALIDATION OVERRIDE SYSTEM ===== */
+
+setTimeout(() => {
+
+  const form = document.getElementById("orderForm");
+  if (!form) return;
+
+  // পুরোনো submit বন্ধ
+  const newForm = form.cloneNode(true);
+  form.parentNode.replaceChild(newForm, form);
+
+  newForm.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const prod = products.find(p => p.id == selectedId);
+    if (!prod) {
+      alert("পণ্য পাওয়া যায়নি!");
+      return;
+    }
+
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+
+    // 🔴 Required Field Check
+    if (!name || !phone || !address) {
+      alert("নাম, মোবাইল এবং বিস্তারিত ঠিকানা অবশ্যই পূরণ করতে হবে");
+      return;
+    }
+
+    const order = {
+      productId: selectedId,
+      productName: prod.name,
+      price: prod.price,
+      discount: prod.discount || 0,
+
+      name: name,
+      phone: phone,
+
+      district: document.getElementById('district').value.trim() || "নেই",
+      upazila: document.getElementById('upazila').value.trim() || "নেই",
+      thana: document.getElementById('thana').value.trim() || "নেই",
+      union: document.getElementById('union').value.trim() || "নেই",
+
+      address: address,
+
+      date: new Date().toLocaleString('bn-BD'),
+      createdAt: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, "orders"), order);
+      alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
+      closeModal();
+    } catch (error) {
+      console.error(error);
+      alert("অর্ডার করতে সমস্যা হয়েছে");
+    }
+
+  });
+
+}, 500);
+
+
+
+/* ===== SIMPLE SAFE SEARCH ===== */
+
+document.getElementById("searchInput").addEventListener("input", function() {
+
+  const keyword = this.value.toLowerCase().trim();
+
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(keyword)
+  );
+
+  renderSearch(filtered);
+
+});
+
+function renderSearch(data){
+
+  const cont = document.getElementById('products-list');
+  cont.innerHTML = '';
+
+  data.forEach((p, index) => {
+
+    const old = Math.round(p.price / (1 - p.discount / 100));
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="discount-badge">-${p.discount}% OFF</div>
+      <img src="${p.image}" alt="${p.name}">
+      <div class="info">
+        <h3>${p.name}</h3>
+        <div>
+          <span class="price">৳ ${p.price}</span>
+          <span class="old-price">৳ ${old}</span>
+        </div>
+        <button class="btn-order" style="color:white;">অর্ডার করুন</button>
+      </div>
+    `;
+
+    card.querySelector(".btn-order").addEventListener("click", () => openOrder(p.id));
+
+    cont.appendChild(card);
+  });
+
+}
+
+
+window.closeModal = function() {
+  const modal = document.getElementById("orderModal");
+  if (modal) modal.style.display = "none";
+
+  const form = document.getElementById("orderForm");
+  if (form) form.reset();
+};
 
 
 /* ========= NO HIDE PRIORITY SEARCH ========= */
@@ -989,19 +1206,56 @@ function render() {
 }
 
 function openOrder(id) {
+
   selectedId = id;
+
   const prod = products.find(p => p.id == id);
-  if (prod) {
-    document.getElementById('selectedProduct').innerText =
-      `${prod.name} — ৳ ${prod.price} (ছাড় ${prod.discount}%)`;
-    document.getElementById('orderModal').style.display = 'flex';
+  if (!prod) return;
+
+  // 🔹 Title
+  document.getElementById('selectedProduct').innerText =
+    `${prod.name} — ৳ ${prod.price} (ছাড় ${prod.discount}%)`;
+
+  // 🔹 Image Direct Load (safe)
+  const imgElement = document.getElementById("modalProductImage");
+  if (imgElement && prod.image) {
+    imgElement.src = prod.image;
   }
+
+// 🔹 Description
+const descElement = document.getElementById("modalProductDesc");
+
+if (descElement) {
+
+  const defaultText = `খোলাফায়ে রাশেদীনের সোনালী যুগের ইতিহাস বইটি ইসলামের প্রথম চার খলিফা—হযরত আবু বকর (রা.), হযরত উমর (রা.), হযরত উসমান (রা.) ও হযরত আলী (রা.)—এর শাসনামলের সুবিচার, নেতৃত্বগুণ, সমাজব্যবস্থা এবং ইসলামের বিস্তারকে কেন্দ্র করে রচিত একটি ঐতিহাসিক গ্রন্থ।
+
+বই দুইটির অফার মূল্যঃ ৪৪০ টাকা
+
+বই : খোলাফায়ে রাশেদীনের সোনালী যুগের ইতিহাস
+কভার : হার্ড কভার
+পৃষ্ঠা : ২২৪ পৃষ্ঠা
+
+বই : ইসলামের মহাবীর খালেদ বিন ওয়ালিদ (রা)
+কভার : হার্ড কভার
+পৃষ্ঠা : ১৬০ পৃষ্ঠা
+
+ঢাকা ডেলিভারি চার্জ ৬০
+ঢাকা বাইরে ডেলিভারি চার্জ ৯০
+
+যোগাযোগ করুন: 01770-019872`;
+
+  descElement.textContent =
+    prod.description && prod.description.trim() !== ""
+      ? prod.description
+      : defaultText;
 }
 
-window.closeModal = function() {
-  document.getElementById('orderModal').style.display = 'none';
-  document.getElementById('orderForm').reset();
-};
+  // 🔹 Show Modal
+  const modal = document.getElementById('orderModal');
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
 
 /* ================= ORDER SUBMIT ================= */
 
@@ -1045,19 +1299,19 @@ loadProducts();
 
     <div class="footer-col">
       <h3>Need Help?</h3>
-      <p><i class="fas fa-phone"></i> 01841650668</p>
-      <p><i class="fas fa-envelope"></i> support@yourdomain.com</p>
-      <p><i class="fas fa-map-marker-alt"></i> আপনার ঠিকানা এখানে</p>
+      <p><i class="fas fa-phone"></i> 01770019872</p>
+      <p><i class="fas fa-envelope"></i>sunnahbookshopbd@gmail.com</p>
+      <p><i class="fas fa-map-marker-alt"></i>টেপামধুপুর কাউনিয়া রংপুর </p>
     </div>
 
     <div class="footer-col">
       <h3>Get in Touch</h3>
       <div class="social-icons">
-        <a href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61583997375262" target="_blank"><i class="fab fa-facebook-f"></i></a>
         <a href="https://youtube.com/yourchannel" target="_blank"><i class="fab fa-youtube"></i></a>
         <a href="https://instagram.com/yourid" target="_blank"><i class="fab fa-instagram"></i></a>
         <a href="https://tiktok.com/@yourid" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://wa.me/8801XXXXXXXXX" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://wa.me/8801770019872" target="_blank"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
 
@@ -1079,6 +1333,9 @@ function openMenu() {
   document.getElementById("overlay").style.display = "block";
 }
 
+
+
+
 function closeMenu() {
   document.getElementById("sideMenu").style.left = "-260px";
   document.getElementById("overlay").style.display = "none";
@@ -1098,15 +1355,7 @@ searchIcon.addEventListener("click", () => {
   }
 });
 
-/* PRODUCT SEARCH */
-searchInput.addEventListener("keyup", (e) => {
-  const value = e.target.value.toLowerCase();
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(value)
-  );
 
-  renderFiltered(filtered);
-});
 
 function renderFiltered(data){
   const cont = document.getElementById('products-list');
@@ -1134,6 +1383,60 @@ function renderFiltered(data){
     cont.appendChild(card);
   });
 }
+</script>
+
+<script>
+
+/* ====== ULTIMATE SEARCH FIX (STOP ALL OLD SEARCH) ====== */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const newInput = document.getElementById("searchInput");
+  const container = document.getElementById("products-list");
+
+  if(!newInput || !container) return;
+
+  // 🔥 পুরোনো সব input event মুছে ফেলা
+  const clonedInput = newInput.cloneNode(true);
+  newInput.parentNode.replaceChild(clonedInput, newInput);
+
+  // 🔥 নতুন clean event যোগ করা
+  clonedInput.addEventListener("input", function(){
+
+    const keyword = this.value.toLowerCase().trim();
+    const cards = Array.from(container.querySelectorAll(".card"));
+
+    // সব কার্ড দেখাও (force show)
+    cards.forEach(card => card.style.display = "block");
+
+    // শুধু order পরিবর্তন
+    cards.sort((a,b)=>{
+
+      const nameA = a.querySelector("h3")?.innerText.toLowerCase() || "";
+      const nameB = b.querySelector("h3")?.innerText.toLowerCase() || "";
+
+      return score(nameA, keyword) - score(nameB, keyword);
+
+    });
+
+    cards.forEach(card => container.appendChild(card));
+
+  });
+
+});
+
+
+function score(name, keyword){
+
+  if(keyword === "") return 3;
+
+  if(name.startsWith(keyword)) return 0;
+
+  if(name.includes(keyword)) return 1;
+
+  return 2; // মিল না থাকলেও থাকবে
+}
+
 </script>
 
 
