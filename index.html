@@ -848,7 +848,7 @@
       <label>মোবাইল নম্বর *</label>
       <input type="tel" id="phone" required>
 
-   <!--   <label>জেলা *</label>
+   <!--  <label>জেলা *</label>
     
      
 <input type="text" id="district">
@@ -933,176 +933,8 @@
 <!-- Firebase SDK (শুধু এটাই যোগ করা) -->
 <script type="module">
 
-/* ===== ORDER VALIDATION OVERRIDE SYSTEM ===== */
+/* ================= FIREBASE ================= */
 
-setTimeout(() => {
-
-  const form = document.getElementById("orderForm");
-  if (!form) return;
-
-  // পুরোনো submit বন্ধ
-  const newForm = form.cloneNode(true);
-  form.parentNode.replaceChild(newForm, form);
-
-  newForm.addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    const prod = products.find(p => p.id == selectedId);
-    if (!prod) {
-      alert("পণ্য পাওয়া যায়নি!");
-      return;
-    }
-
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const address = document.getElementById('address').value.trim();
-
-    // 🔴 Required Field Check
-    if (!name || !phone || !address) {
-      alert("নাম, মোবাইল এবং বিস্তারিত ঠিকানা অবশ্যই পূরণ করতে হবে");
-      return;
-    }
-
-    const order = {
-      productId: selectedId,
-      productName: prod.name,
-      price: prod.price,
-      discount: prod.discount || 0,
-
-      name: name,
-      phone: phone,
-
-      district: document.getElementById('district').value.trim() || "নেই",
-      upazila: document.getElementById('upazila').value.trim() || "নেই",
-      thana: document.getElementById('thana').value.trim() || "নেই",
-      union: document.getElementById('union').value.trim() || "নেই",
-
-      address: address,
-
-      date: new Date().toLocaleString('bn-BD'),
-      createdAt: serverTimestamp()
-    };
-
-    try {
-      await addDoc(collection(db, "orders"), order);
-      alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
-      closeModal();
-    } catch (error) {
-      console.error(error);
-      alert("অর্ডার করতে সমস্যা হয়েছে");
-    }
-
-  });
-
-}, 500);
-
-
-
-/* ===== SIMPLE SAFE SEARCH ===== */
-
-document.getElementById("searchInput").addEventListener("input", function() {
-
-  const keyword = this.value.toLowerCase().trim();
-
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(keyword)
-  );
-
-  renderSearch(filtered);
-
-});
-
-function renderSearch(data){
-
-  const cont = document.getElementById('products-list');
-  cont.innerHTML = '';
-
-  data.forEach((p, index) => {
-
-    const old = Math.round(p.price / (1 - p.discount / 100));
-
-    const card = document.createElement('div');
-    card.className = 'card';
-
-    card.innerHTML = `
-      <div class="discount-badge">-${p.discount}% OFF</div>
-      <img src="${p.image}" alt="${p.name}">
-      <div class="info">
-        <h3>${p.name}</h3>
-        <div>
-          <span class="price">৳ ${p.price}</span>
-          <span class="old-price">৳ ${old}</span>
-        </div>
-        <button class="btn-order" style="color:white;">অর্ডার করুন</button>
-      </div>
-    `;
-
-    card.querySelector(".btn-order").addEventListener("click", () => openOrder(p.id));
-
-    cont.appendChild(card);
-  });
-
-}
-
-
-window.closeModal = function() {
-  const modal = document.getElementById("orderModal");
-  if (modal) modal.style.display = "none";
-
-  const form = document.getElementById("orderForm");
-  if (form) form.reset();
-};
-
-
-/* ========= NO HIDE PRIORITY SEARCH ========= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const searchInput = document.getElementById("searchInput");
-  const container = document.getElementById("products-list");
-
-  if(!searchInput || !container) return;
-
-  searchInput.addEventListener("input", () => {
-
-    const keyword = searchInput.value.toLowerCase().trim();
-
-    const cards = Array.from(container.querySelectorAll(".card"));
-
-    cards.sort((a, b) => {
-
-      const nameA = a.querySelector("h3").innerText.toLowerCase();
-      const nameB = b.querySelector("h3").innerText.toLowerCase();
-
-      const scoreA = getScore(nameA, keyword);
-      const scoreB = getScore(nameB, keyword);
-
-      return scoreA - scoreB;   // কম স্কোর মানে বেশি ম্যাচ
-    });
-
-
-
-    // শুধু order বদলাবে
-    cards.forEach(card => container.appendChild(card));
-
-  });
-
-});
-
-
-function getScore(name, keyword){
-
-  if(keyword === "") return 3;
-
-  if(name.startsWith(keyword)) return 0;   // সবচেয়ে আগে
-
-  if(name.includes(keyword)) return 1;     // পরে
-
-  return 2;                                // মিল নাই — নিচে যাবে
-}
-
-/* ================= FIREBASE IMPORT ================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { 
   getFirestore, 
@@ -1112,7 +944,6 @@ import {
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* ================= FIREBASE CONFIG ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyCa3qjuHUkFJwOEv1Cbp-E0AIkihCW4zKY",
   authDomain: "sunnah-book-corner.firebaseapp.com",
@@ -1125,65 +956,41 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* ================= THEME TOGGLE ================= */
-const themeToggle = document.getElementById('themeToggle');
-const html = document.documentElement;
-
-themeToggle.addEventListener('click', () => {
-  const current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-});
-
-/* ================= SLIDER ================= */
-let slideIndex = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-const total = slides.length;
-
-function showSlide(n) {
-  slides.forEach(s => s.classList.remove('active'));
-  dots.forEach(d => d.classList.remove('active'));
-  slides[n].classList.add('active');
-  dots[n].classList.add('active');
-  slideIndex = n;
-}
-
-function next() { showSlide((slideIndex + 1) % total); }
-function prev() { showSlide((slideIndex - 1 + total) % total); }
-
-document.querySelector('.next').onclick = next;
-document.querySelector('.prev').onclick = prev;
-dots.forEach((dot, i) => dot.onclick = () => showSlide(i));
-setInterval(next, 5000);
-
-/* ================= PRODUCTS ================= */
+/* ================= GLOBAL ================= */
 
 let products = [];
 let selectedId = null;
 
+/* ================= LOAD PRODUCTS ================= */
+
 async function loadProducts() {
   try {
-    const querySnapshot = await getDocs(collection(db, "products"));
+    const snapshot = await getDocs(collection(db, "products"));
     products = [];
-    querySnapshot.forEach((docSnap) => {
-      products.push({ id: docSnap.id, ...docSnap.data() });
+
+    snapshot.forEach(doc => {
+      products.push({ id: doc.id, ...doc.data() });
     });
-    render();
-  } catch (error) {
-    console.error("Product Load Error:", error);
+
+    renderProducts();
+  } catch (err) {
+    console.error("Product Load Error:", err);
   }
 }
 
+/* ================= RENDER PRODUCTS ================= */
 
+function renderProducts() {
 
-function render() {
-  const cont = document.getElementById('products-list');
-  cont.innerHTML = '';
+  const container = document.getElementById("products-list");
+  container.innerHTML = "";
 
   products.forEach((p, index) => {
+
     const old = Math.round(p.price / (1 - p.discount / 100));
-    const card = document.createElement('div');
-    card.className = 'card';
+
+    const card = document.createElement("div");
+    card.className = "card";
 
     card.innerHTML = `
       <div class="discount-badge">-${p.discount}% OFF</div>
@@ -1198,98 +1005,101 @@ function render() {
       </div>
     `;
 
-    card.querySelector(".btn-order").addEventListener("click", () => openOrder(p.id));
+    card.querySelector(".btn-order")
+        .addEventListener("click", () => openOrder(p.id));
 
-    cont.appendChild(card);
-    setTimeout(() => card.classList.add('visible'), 150 * index);
+    container.appendChild(card);
+    setTimeout(() => card.classList.add("visible"), 100 * index);
   });
 }
 
-function openOrder(id) {
+/* ================= OPEN ORDER MODAL ================= */
+
+window.openOrder = function(id) {
 
   selectedId = id;
 
-  const prod = products.find(p => p.id == id);
-  if (!prod) return;
+  const product = products.find(p => p.id === id);
+  if (!product) return;
 
-  // 🔹 Title
-  document.getElementById('selectedProduct').innerText =
-    `${prod.name} — ৳ ${prod.price} (ছাড় ${prod.discount}%)`;
+  document.getElementById("selectedProduct").innerText =
+    `${product.name} — ৳ ${product.price} (ছাড় ${product.discount}%)`;
 
-  // 🔹 Image Direct Load (safe)
-  const imgElement = document.getElementById("modalProductImage");
-  if (imgElement && prod.image) {
-    imgElement.src = prod.image;
-  }
+  document.getElementById("modalProductImage").src = product.image;
+  document.getElementById("modalProductDesc").textContent =
+    product.description || "";
 
-// 🔹 Description
-const descElement = document.getElementById("modalProductDesc");
-
-if (descElement) {
-
-  const defaultText = `খোলাফায়ে রাশেদীনের সোনালী যুগের ইতিহাস বইটি ইসলামের প্রথম চার খলিফা—হযরত আবু বকর (রা.), হযরত উমর (রা.), হযরত উসমান (রা.) ও হযরত আলী (রা.)—এর শাসনামলের সুবিচার, নেতৃত্বগুণ, সমাজব্যবস্থা এবং ইসলামের বিস্তারকে কেন্দ্র করে রচিত একটি ঐতিহাসিক গ্রন্থ।
-
-বই দুইটির অফার মূল্যঃ ৪৪০ টাকা
-
-বই : খোলাফায়ে রাশেদীনের সোনালী যুগের ইতিহাস
-কভার : হার্ড কভার
-পৃষ্ঠা : ২২৪ পৃষ্ঠা
-
-বই : ইসলামের মহাবীর খালেদ বিন ওয়ালিদ (রা)
-কভার : হার্ড কভার
-পৃষ্ঠা : ১৬০ পৃষ্ঠা
-
-ঢাকা ডেলিভারি চার্জ ৬০
-ঢাকা বাইরে ডেলিভারি চার্জ ৯০
-
-যোগাযোগ করুন: 01770-019872`;
-
-  descElement.textContent =
-    prod.description && prod.description.trim() !== ""
-      ? prod.description
-      : defaultText;
+  document.getElementById("orderModal").style.display = "flex";
 }
 
-  // 🔹 Show Modal
-  const modal = document.getElementById('orderModal');
-  if (modal) {
-    modal.style.display = "flex";
-  }
+/* ================= CLOSE MODAL ================= */
+
+window.closeModal = function() {
+  document.getElementById("orderModal").style.display = "none";
+  document.getElementById("orderForm").reset();
 }
 
 /* ================= ORDER SUBMIT ================= */
 
-document.getElementById('orderForm').addEventListener("submit", async (e) => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
 
-  const prod = products.find(p => p.id == selectedId);
-  if (!prod) return alert("পণ্য পাওয়া যায়নি!");
+  const form = document.getElementById("orderForm");
 
-  const order = {
-    productId: selectedId,
-    productName: prod.name,
-    price: prod.price,
-    discount: prod.discount,
-    name: document.getElementById('name').value.trim(),
-    phone: document.getElementById('phone').value.trim(),
-    district: document.getElementById('district').value,
-    upazila: document.getElementById('upazila').value.trim(),
-    thana: document.getElementById('thana').value.trim(),
-    union: document.getElementById('union').value.trim(),
-    address: document.getElementById('address').value.trim(),
-    date: new Date().toLocaleString('bn-BD'),
-    createdAt: serverTimestamp()   // 🔥 খুব গুরুত্বপূর্ণ
-  };
+  form.addEventListener("submit", async (e) => {
 
-  try {
-    await addDoc(collection(db, "orders"), order);
-    alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
-    closeModal();
-  } catch (error) {
-    console.error("Order Error:", error);
-    alert(error.message);
-  }
+    e.preventDefault();
+
+    if (!selectedId) {
+      
+      return;
+    }
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    if (!name || !phone || !address) {
+      alert("নাম, মোবাইল এবং ঠিকানা অবশ্যই পূরণ করুন");
+      return;
+    }
+
+    const product = products.find(p => p.id === selectedId);
+    if (!product) {
+      alert("পণ্য পাওয়া যায়নি");
+      return;
+    }
+
+    try {
+
+      await addDoc(collection(db, "orders"), {
+        productId: selectedId,
+        productName: product.name,
+        price: product.price,
+        discount: product.discount || 0,
+        name: name,
+        phone: phone,
+        district: "নেই",
+        upazila: "নেই",
+        thana: "নেই",
+        union: "নেই",
+        address: address,
+        date: new Date().toLocaleString("bn-BD"),
+        createdAt: serverTimestamp()
+      });
+
+      alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
+      closeModal();
+
+    } catch (err) {
+      console.error("Order Error:", err);
+      alert("অর্ডার করতে সমস্যা হয়েছে");
+    }
+
+  });
+
 });
+
+/* ================= INIT ================= */
 
 loadProducts();
 
@@ -1438,6 +1248,76 @@ function score(name, keyword){
 }
 
 </script>
+
+<script>
+
+/* ===== SIMPLE FINAL ORDER FIX ===== */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const form = document.getElementById("orderForm");
+  if(!form) return;
+
+  form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    if(typeof selectedId === "undefined" || !selectedId){
+      
+      return;
+    }
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    if(!name || !phone || !address){
+      alert("নাম, মোবাইল এবং ঠিকানা অবশ্যই পূরণ করুন");
+      return;
+    }
+
+    try{
+
+      const prod = products.find(p => p.id == selectedId);
+      if(!prod){
+        alert("পণ্য পাওয়া যায়নি");
+        return;
+      }
+
+      await addDoc(collection(db, "orders"), {
+        productId: selectedId,
+        productName: prod.name,
+        price: prod.price,
+        discount: prod.discount || 0,
+        name: name,
+        phone: phone,
+        district: "নেই",
+        upazila: "নেই",
+        thana: "নেই",
+        union: "নেই",
+        address: address,
+        date: new Date().toLocaleString("bn-BD"),
+        createdAt: serverTimestamp()
+      });
+
+      alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
+      form.reset();
+      if(typeof closeModal === "function") closeModal();
+
+    }catch(err){
+      console.error(err);
+      alert("অর্ডার করতে সমস্যা হয়েছে");
+    }
+
+  });
+
+});
+
+</script>
+
+
+
+
 
 
 </body>
