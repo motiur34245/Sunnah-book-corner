@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অর্ডার সফল</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body{
+  margin:0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#0f172a,#1e293b);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:white;
+  text-align:center;
+}
+
+.box{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding:40px 25px;
+  border-radius:20px;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 15px 50px rgba(0,0,0,0.4);
+}
+
+.success-icon{
+  font-size:80px;
+  color:#22c55e;
+  margin-bottom:20px;
+  animation:pop 0.6s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(0)}
+  80%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+
+h1{
+  margin-bottom:10px;
+  font-size:26px;
+}
+
+p{
+  color:#cbd5e1;
+  margin-bottom:25px;
+}
+
+.btn{
+  display:block;
+  text-decoration:none;
+  padding:14px;
+  border-radius:30px;
+  margin:10px 0;
+  font-weight:bold;
+}
+
+.home{
+  background:#e60000;
+  color:white;
+}
+
+.wa{
+  background:#25d366;
+  color:white;
+}
+
+.call{
+  background:#0f9d8a;
+  color:white;
+}
+
+.btn:hover{
+  transform:scale(1.03);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<div class="success-icon">
+<i class="fas fa-check-circle"></i>
+</div>
+
+<h1>অর্ডার সফল হয়েছে</h1>
+
+<p>
+ধন্যবাদ ❤️<br>
+আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে।  
+খুব দ্রুত আমাদের টিম আপনাকে কল করে কনফার্ম করবে।
+</p>
+
+<a href="index.html" class="btn home">
+<i class="fas fa-home"></i> হোম পেজে যান
+</a>
+
+<a href="https://wa.me/8801770019872" class="btn wa">
+<i class="fab fa-whatsapp"></i> WhatsApp এ যোগাযোগ
+</a>
+
+<a href="tel:01770019872" class="btn call">
+<i class="fas fa-phone"></i> কল করুন
+</a>
+
+</div>
+
+</body>
+  </html>
