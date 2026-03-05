@@ -300,7 +300,7 @@ document.getElementById("orderForm")
 
   try{
     await addDoc(collection(db, "orders"), order);
-    alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
+    window.location.href = "success.html";
     e.target.reset();
   }
   catch(error){
