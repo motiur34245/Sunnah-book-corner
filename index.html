@@ -1087,8 +1087,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createdAt: serverTimestamp()
       });
 
-      alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
-      closeModal();
+      window.location.href = "success.html";
 
     } catch (err) {
       console.error("Order Error:", err);
