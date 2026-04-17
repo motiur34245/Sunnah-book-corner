@@ -194,9 +194,9 @@ button:hover{
 👉 কত পিস নিবেন? লিখুন 
   
 </label>
-    <input type="text" id="district" required>
+    <input type="text" id="district" required
 
- <!<label>উপজেলা *</label>
+ <!--<label>উপজেলা *</label>
     <input type="text" id="upazila" required>
 
     <label>থানা *</label>
@@ -298,7 +298,7 @@ document.getElementById("orderForm")
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const address = document.getElementById('address').value.trim();
-
+const district = document.getElementById('district').value.trim();
   if(!name || !phone || !address){
     alert("নাম, মোবাইল এবং ঠিকানা অবশ্যই পূরণ করুন");
     return;
@@ -311,7 +311,7 @@ document.getElementById("orderForm")
     discount: currentProduct.discount || 0,
     name: name,
     phone: phone,
-    district: "নেই",
+    district: district,
     upazila: "নেই",
     thana: "নেই",
     union: "নেই",
@@ -341,54 +341,6 @@ currency: 'BDT'
 
 </script>
 
- <script>
-// ================= FIX DISTRICT VALUE (NO CHANGE TO OLD CODE) =================
-
-(function(){
-
-  let savedDistrict = "";
-
-  // Form submit হলে value ধরবো
-  document.addEventListener("DOMContentLoaded", function(){
-
-    const form = document.getElementById("orderForm");
-
-    if(form){
-      form.addEventListener("submit", function(){
-        const input = document.getElementById("district");
-        if(input){
-          savedDistrict = input.value.trim();
-        }
-      });
-    }
-
-  });
-
-  // addDoc override (Firestore save এর আগে data ঠিক করা)
-  const interval = setInterval(function(){
-
-    if(typeof addDoc === "function"){
-
-      const originalAddDoc = addDoc;
-
-      window.addDoc = async function(...args){
-
-        const data = args[1];
-
-        if(savedDistrict){
-          data.district = savedDistrict; // এখানে fix হচ্ছে
-        }
-
-        return originalAddDoc.apply(this, args);
-      };
-
-      clearInterval(interval);
-    }
-
-  }, 100);
-
-})();
- </script>
 
 </body>
   </html>
