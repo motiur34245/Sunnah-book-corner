@@ -1021,7 +1021,60 @@ loadProducts();
 
 
 
-  
+  function addModalFooter() {
+    const modal = document.querySelector(".modal-content");
+    if (!modal) return;
+
+    if (document.querySelector(".modal-footer")) return;
+
+    const footer = document.createElement("div");
+    footer.className = "modal-footer";
+
+    footer.style.cssText = `
+        background:#1b1f35;
+        color:#fff;
+        width:calc(100% + 40px);
+        margin:20px -20px -30px -20px;
+        padding:25px 20px 35px;
+        border-radius:0;
+        box-sizing:border-box;
+    `;
+
+    footer.innerHTML = `
+        <h3 style="color:#d4a017;"><i class="fas fa-headset"></i> সাহায্য</h3>
+
+        <p><i class="fas fa-phone" style="color:#d4a017;"></i> 01770019872</p>
+        <p><i class="fas fa-envelope" style="color:#d4a017;"></i> motiur34245@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt" style="color:#d4a017;"></i> টেপামধুপুর, কাউনিয়া, রংপুর</p>
+
+        <h3 style="color:#d4a017;margin-top:20px;">
+            <i class="fas fa-link"></i> সোশ্যাল মিডিয়া
+        </h3>
+
+        <div style="display:flex;gap:15px;font-size:26px;margin:15px 0;">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-youtube"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-tiktok"></i>
+            <i class="fab fa-whatsapp"></i>
+        </div>
+
+        <hr style="border-color:#444;margin:20px 0;">
+
+        <p style="text-align:center;">
+            © 2026 <span style="color:#d4a017;">Safe Bd</span> • সর্বস্বত্ব সংরক্ষিত
+        </p>
+    `;
+
+    modal.appendChild(footer);
+}
+
+const oldOpen = window.openProductModal;
+
+window.openProductModal = function (...args) {
+    oldOpen.apply(this, args);
+    setTimeout(addModalFooter, 100);
+};
 
 
 
