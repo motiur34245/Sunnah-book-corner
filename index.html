@@ -2,963 +2,805 @@
 <html lang="bn" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Safe Bd</title>
 
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}
-(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
 
-fbq('init', '4166670166976974');
-fbq('track', 'PageView');
-</script>
-  
-  
   <style>
-  :root {
-    --primary: #b8860b;       /* gold / premium */
-    --primary-dark: #9c6f00;
-    --accent: #1a1a1a;
-    --bg: #fdfdfd;
-    --card-bg: rgba(255,255,255,0.92);
-    --text: #111827;
-    --gray: #4b5563;
-    --shadow: 0 12px 40px rgba(0,0,0,0.08);
-  }
-  [data-theme="dark"] {
-    --bg: #0f172a;
-    --card-bg: rgba(30,41,59,0.9);
-    --text: #f1f5f9;
-    --gray: #94a3b8;
-    --shadow: 0 12px 40px rgba(0,0,0,0.5);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition: all 0.4s ease;
-    line-height: 1.6;
-  }
-  header {
-    background: var(--accent);
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    position: sticky;
-    top: 50;
-    z-index: 100;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }
-  header h1 {
-    font-size: 1.8rem;
-    letter-spacing: 1.5px;
-    font-weight: 700;
-  }
+    :root {
+      --primary: #b8860b;
+      --primary-dark: #9c6f00;
+      --primary-light: #d4a040;
+      --accent: #1a1a1a;
+      --bg: #f8f9fc;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --gray: #6b7280;
+      --shadow: 0 8px 30px rgba(0,0,0,0.08);
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f1f5f9;
+      --gray: #94a3b8;
+      --shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: var(--transition);
+      padding: 0;
+      overflow-x: hidden;
+    }
 
-.hero {
-  position: relative;
-  height: 180px;              /* এখানে height ঠিক করো */
-  overflow: hidden;
-  background: linear-gradient(to bottom, var(--accent), #2d3748);
-  outline: 3px solid red;
-}
+    /* ===== HEADER ===== */
+    .top-header {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+    }
+    .menu-icon { font-size: 22px; cursor: pointer; color: #fff; transition: var(--transition); }
+    .menu-icon:hover { transform: scale(1.1); }
+    .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+    .logo span { color: var(--primary); }
+    .header-icons { display: flex; align-items: center; gap: 18px; font-size: 19px; color: #fff; }
+    .header-icons i { cursor: pointer; transition: var(--transition); }
+    .header-icons i:hover { color: var(--primary); transform: scale(1.1); }
+    .cart-icon { position: relative; }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #e60000;
+      color: #fff;
+      font-size: 10px;
+      width: 19px;
+      height: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(230,0,0,0.3);
+    }
 
-.slides {
-  position: relative;
-  height: 100%;
-}
+    /* ===== SEARCH ===== */
+    .search-box {
+      display: none;
+      padding: 14px 18px;
+      background: var(--card-bg);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px 18px;
+      border: 2px solid #e5e7eb;
+      border-radius: 30px;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(184,134,11,0.1); }
 
-.slide {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 1.4s ease-in-out;
-  background-size: cover;
-  background-position: center;
-}
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      margin: 14px 16px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .slides { position: relative; height: 100%; }
+    .slide {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      background-size: cover;
+      background-position: center;
+    }
+    .slide.active { opacity: 1; }
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+    }
+    .slide-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 28px;
+      color: white;
+      z-index: 2;
+    }
+    .slide-content h2 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .slide-content p {
+      font-size: 14px;
+      opacity: 0.9;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .prev:hover, .next:hover {
+      background: var(--primary);
+      transform: translateY(-50%) scale(1.1);
+    }
+    .prev { left: 12px; }
+    .next { right: 12px; }
+    .dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .dot.active { background: var(--primary); transform: scale(1.3); box-shadow: 0 0 12px rgba(184,134,11,0.4); }
 
-.slide.active {
-  opacity: 1;
-}
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      margin: 32px 0 20px;
+      color: var(--text);
+      position: relative;
+    }
+    .section-title span { color: var(--primary); }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--primary);
+      margin: 8px auto 0;
+      border-radius: 4px;
+    }
 
-.slide::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.45),
-    rgba(0,0,0,0.75)
-  );
-}
-
-.slide-content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  padding: 0 1rem;
-  z-index: 2;
-}
-
-.slide-content h2 {
-  font-size: 24px;           /* clamp বাদ দিলাম height ছোট রাখতে */
-  margin-bottom: 6px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-shadow: 0 3px 15px rgba(0,0,0,0.6);
-}
-
-.slide-content p {
-  font-size: 14px;
-  max-width: 90%;
-  opacity: 0.95;
-}
-  .prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(6px);
-    color: white;
-    border: none;
-    width: 48px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 1.4rem;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s;
-  }
-  .prev:hover, .next:hover {
-    background: var(--primary);
-    transform: translateY(-50%) scale(1.12);
-  }
-  .prev { left: 18px; }
-  .next { right: 18px; }
-  .dots {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 12px;
-    z-index: 10;
-  }
-  .dot {
-    width: 7px;
-    height: 7px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.4s;
-  }
-  .dot.active {
-    background: var(--primary);
-    transform: scale(1.4);
-    box-shadow: 0 0 0 4px rgba(184,134,11,0.3);
-  }
-
-  .container {
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 0 0.6rem;
-  }
-  h2.section-title {
-    text-align: center;
-    font-size: 2.6rem;
-    margin: 3.5rem 0 2.5rem;
-    color: var(--primary);
-    font-weight: 700;
-    position: relative;
-  }
-  h2.section-title::after {
-    content: '';
-    width: 100px;
-    height: 4px;
-    background: var(--primary);
-    position: absolute;
-    bottom: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 2px;
-  }
-
-  .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2.8rem;
-    padding-bottom: 4rem;
-  }
-
-  .card {
-    position: relative;
-    background: var(--card-bg);
-    border-radius: 7px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(10px);
-    border: 1px solid #dc2626;           /* লাল চিকন বর্ডার */
-    transition: all 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  .card.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .card:hover {
-    transform: translateY(-14px);
-    box-shadow: 0 24px 60px rgba(184,134,11,0.18);
-    border-color: #ef4444;                /* হোভারে হালকা লাল */
-  }
-
-.card img {
-  width: 100%;
-  height: 220px;
-  object-fit: contain;   /* ✅ ক্রপ হবে না */
-  background: #fff;      /* ফাঁকা থাকলে সাদা দেখাবে */
-}
-  .card:hover img {
-    transform: scale(1.09);
-  }
-
-  .discount-badge {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    background: var(--primary);
-    color: #111;
-    padding: 6px 13px;
-    font-weight: 700;
-    border-radius: 50px;
-    font-size: 0.50rem;
-    box-shadow: 0 4px 12px rgba(184,134,11,0.3);
-    z-index: 2;
-  }
-
-  .info {
-    padding: 1.2rem 1.3rem 1.5rem;
-    text-align: center;
-  }
-  .info h3 {
-    font-size: 1.28rem;
-    margin-bottom: 0.65rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-  .price {
-    font-size: 1.68rem;
-    font-weight: 800;
-    color:black;
-  }
-  .old-price {
-    color: var(--gray);
-    text-decoration: line-through;
-    margin-left: 0.8rem;
-    font-size: 1.15rem;
-  }
-  .btn-order {
-    background: linear-gradient(135deg, var(--primary), red);
-    color: red;
-    border: none;
-    padding: 0.82rem 1.8rem;
-    border-radius: 9px;
-    font-size: 0.98rem;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 1.1rem;
-    transition: all 0.35s;
-    box-shadow: 0 8px 24px rgba(184,134,11,0.25);
-  }
-  .btn-order:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(184,134,11,0.35);
-  }
-
- /* ===== MODAL FULL SCREEN CLEAN VERSION ===== */
-
-.modal{
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 9999;
-
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.modal-content{
-  background: #ffffff;
-  width: 100%;
-  max-width: 100%;
-  border-radius: 20px 20px 0 0;
-  padding: 20px;
-  max-height: 93vh;      /* পুরো স্ক্রিন ঢাকবে না */
-  overflow-y: auto;
-  box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
-}
-
-/* স্ক্রল সুন্দর করার জন্য */
-.modal-content::-webkit-scrollbar{
-  width: 5px;
-}
-.modal-content::-webkit-scrollbar-thumb{
-  background: #ccc;
-  border-radius: 10px;
-}
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.88) translateY(30px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-  .close {
-    float: right;
-    font-size: 2.4rem;
-    cursor: pointer;
-    color: var(--gray);
-  }
-  .close:hover { color: var(--primary); }
-  form label {
-    display: block;
-    margin: 1.3rem 0 0.6rem;
-    font-weight: 600;
-    color:#1f2937;
-  }
-  form input, form select, form textarea {
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid rgba(184,134,11,0.2);
-    border-radius: 14px;
-    font-size: 1rem;
-    background: transparent;
-    color: var(--text);
-    transition: all 0.3s;
-  }
-  form input:focus, form select:focus, form textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(184,134,11,0.15);
-  }
-  .btn-submit {
-    background: linear-gradient(135deg, var(--primary), red);
-    color: #111;
-    border: none;
-    padding: 1.1rem;
-    width: 100%;
-    margin-top: 2rem;
-    border-radius: 14px;
-    font-size: 1.22rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.35s;
-  }
-  .btn-submit:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(184,134,11,0.3);
-  }
-
-  .theme-toggle {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--primary);
-    color: #111;
-    border: none;
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    z-index: 99;
-    transition: all 0.3s;
-  }
-  .theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
-
-  /* ────────────────────────────────────────────────
-     মিডিয়া কোয়েরি – মোবাইল + ট্যাবলেট অপটিমাইজেশন
-  ──────────────────────────────────────────────── */
-  @media (max-width: 1023px) {
+    /* ===== PRODUCTS ===== */
+    .container { max-width: 1320px; margin: 0 auto; padding: 0 14px; }
     .products {
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding-bottom: 80px;
     }
-  }
-
-
-    .products {
-      grid-template-columns: repeat(2, 1fr);   /* ২টা পাশাপাশি */
-      gap: 1.6rem 1.2rem;
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.04);
+      opacity: 0;
+      transform: translateY(30px);
+      cursor: pointer;
     }
-    .card img {
-      height: 180px;          /* মোবাইলে আরও কম */
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .info {
-      padding: 1.1rem 1rem 1.3rem;
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(184,134,11,0.12);
+      border-color: var(--primary);
     }
+    .card .image-wrapper {
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .card .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: var(--transition);
+    }
+    .card:hover .image-wrapper img { transform: scale(1.04); }
+    .discount-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: linear-gradient(135deg, var(--primary), #e60000);
+      color: #fff;
+      padding: 6px 14px;
+      font-weight: 700;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      box-shadow: 0 4px 12px rgba(184,134,11,0.3);
+      z-index: 2;
+    }
+    .info { padding: 16px 18px 18px; text-align: center; }
     .info h3 {
-      font-size: 1.18rem;
-      margin-bottom: 0.55rem;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
-    .price {
-      font-size: 1.55rem;
-    }
+    .price { font-size: 22px; font-weight: 800; color: #e60000; }
     .old-price {
-      font-size: 1.05rem;
+      color: var(--gray);
+      text-decoration: line-through;
+      margin-left: 8px;
+      font-size: 15px;
     }
     .btn-order {
-      padding: 0.78rem 1.6rem;
-      font-size: 0.96rem;
-      margin-top: 0.95rem;
+      background: linear-gradient(135deg, var(--primary), #e60000);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(184,134,11,0.25);
+      width: 100%;
     }
-    h2.section-title {
-      font-size: 2.1rem;
-      margin: 2.6rem 0 1.8rem;
+    .btn-order:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(184,134,11,0.35);
     }
-  }
 
-  @media (max-width: 480px) {
-    .products {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.4rem 1rem;
+    /* ===== MODAL ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      justify-content: center;
+      align-items: flex-end;
     }
-    .card img {
-      height: 160px;        /* খুব ছোট স্ক্রিন */
+    .modal-content {
+      background: var(--card-bg);
+      width: 100%;
+      max-height: 95vh;
+      border-radius: 24px 24px 0 0;
+      padding: 24px 20px 30px;
+      overflow-y: auto;
+      animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .info {
-      padding: 1rem 0.9rem 1.2rem;
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
-  }
+    .close {
+      float: right;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--gray);
+      transition: var(--transition);
+    }
+    .close:hover { color: var(--primary); transform: rotate(90deg); }
 
-.footer{
-  background:#000;
-  color:#fff;
-  padding:40px 20px 20px;
-}
+    /* ===== MODAL IMAGE - FULL SQUARE ===== */
+    .modal-image-wrapper {
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: #f8f9fa;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 8px 0 12px;
+    }
+    .modal-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-.footer-container{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:30px;
-}
+    .thumb-gallery {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 0 12px;
+      scrollbar-width: thin;
+    }
+    .thumb-gallery .thumb-wrapper {
+      width: 70px;
+      height: 70px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      border: 2px solid #e5e7eb;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .thumb-gallery .thumb-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumb-gallery .thumb-wrapper:hover { border-color: var(--primary); transform: scale(1.05); }
+    .thumb-gallery .thumb-wrapper.active-thumb { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(184,134,11,0.2); }
 
-.footer h3{
-  margin-bottom:15px;
-  font-size:18px;
-}
+    .modal-product-desc {
+      background: var(--bg);
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 6px 0 14px;
+      color: var(--text);
+    }
 
-.footer p{
-  margin-bottom:10px;
-  font-size:14px;
-  color:#ccc;
-}
+    .checkout-box {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 10px 0;
+    }
+    .checkout-box .delivery-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .qty-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+    .qty-row label { font-weight: 600; font-size: 15px; }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .qty-control button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid #e5e7eb;
+      background: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+    }
+    .qty-control button:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .qty-control input {
+      width: 56px;
+      padding: 6px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 17px;
+      text-align: center;
+      font-weight: 700;
+      background: #fff;
+      color: var(--text);
+    }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 19px;
+      font-weight: 700;
+      border-top: 2px dashed #e5e7eb;
+      padding-top: 12px;
+      margin-top: 8px;
+    }
+    .total-row .total-price { color: #e60000; font-size: 22px; }
 
-.footer a{
-  color:#ccc;
-  text-decoration:none;
-}
+    .order-form-container {
+      margin-top: 14px;
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+    .order-form-container h3 {
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .order-form-container input,
+    .order-form-container textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      background: #fff;
+      color: var(--text);
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    .order-form-container input:focus,
+    .order-form-container textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(184,134,11,0.08);
+    }
+    .order-form-container textarea { min-height: 65px; resize: vertical; }
 
-.footer a:hover{
-  color:#fff;
-}
+    .btn-submit-order {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      width: 100%;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-submit-order:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.3); }
 
-.social-icons{
-  display:flex;
-  gap:12px;
-  margin-top:10px;
-}
+    .extra-order-buttons {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .extra-order-buttons a {
+      text-decoration: none;
+      padding: 13px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-align: center;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
+    }
+    .extra-order-buttons a:hover { transform: scale(1.02); }
+    .wa-btn { background: #25d366; }
+    .ms-btn { background: #1877f2; }
+    .call-btn { background: #0f9d8a; }
 
-.social-icons a{
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:#111;
-  font-size:18px;
-  transition:.3s;
-}
+    /* ===== SIDE MENU ===== */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: var(--card-bg);
+      box-shadow: 4px 0 30px rgba(0,0,0,0.1);
+      transition: var(--transition);
+      z-index: 2000;
+      padding: 24px 20px;
+    }
+    .side-menu.open { left: 0; }
+    .side-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .side-header h3 { font-size: 22px; font-weight: 800; }
+    .side-header h3 span { color: var(--primary); }
+    .side-header i { font-size: 24px; cursor: pointer; transition: var(--transition); }
+    .side-header i:hover { transform: rotate(90deg); }
+    .side-menu a {
+      display: block;
+      padding: 14px 0;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .side-menu a:hover { color: var(--primary); padding-left: 8px; }
+    .side-menu a i { width: 28px; margin-right: 12px; }
 
-.social-icons a:hover{
-  transform:scale(1.1);
-}
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      z-index: 1500;
+      backdrop-filter: blur(2px);
+    }
+    .overlay.show { display: block; }
 
-.social-icons a:nth-child(1){ background:#1877f2; }
-.social-icons a:nth-child(2){ background:#ff0000; }
-.social-icons a:nth-child(3){ background:#e1306c; }
-.social-icons a:nth-child(4){ background:#000; }
-.social-icons a:nth-child(5){ background:#25d366; }
+    /* ===== FOOTER ===== */
+    .footer {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      color: #fff;
+      padding: 40px 20px 20px;
+      margin-top: 20px;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .footer h3 { margin-bottom: 14px; font-size: 18px; color: var(--primary); }
+    .footer p { margin-bottom: 8px; font-size: 14px; color: #ccc; }
+    .footer p i { width: 22px; color: var(--primary); }
+    .footer a { color: #ccc; text-decoration: none; transition: var(--transition); }
+    .footer a:hover { color: #fff; }
+    .social-icons { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+    .social-icons a {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      font-size: 18px;
+      transition: var(--transition);
+    }
+    .social-icons a:hover { transform: scale(1.1); background: var(--primary); }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 13px;
+      color: #888;
+    }
 
-.footer-bottom{
-  text-align:center;
-  margin-top:30px;
-  padding-top:20px;
-  border-top:1px solid #333;
-  font-size:14px;
-}
+    .theme-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--card-bg);
+      color: var(--text);
+      border: 2px solid var(--primary);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      z-index: 99;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover { transform: scale(1.1) rotate(20deg); background: var(--primary); color: #fff; }
 
-
-/* ===== HEADER STYLE ===== */
-
-.top-header{
-  background:#black;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 15px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
-  position:sticky;
-  top:0;
-  z-index:999;
-}
-
-.menu-icon{
-  font-size:20px;
-  cursor:pointer;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:700;
-}
-
-.logo span{
-  color:#e60000;
-}
-
-.header-icons{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  font-size:18px;
-}
-
-.header-icons i{
-  cursor:pointer;
-}
-
-.cart-icon{
-  position:relative;
-}
-
-.cart-count{
-  position:absolute;
-  top:-6px;
-  right:-8px;
-  background:#000;
-  color:#fff;
-  font-size:11px;
-  width:18px;
-  height:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-}
-
-/* 🔽 নিচে বসাও */
-.extra-order-buttons {
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.extra-order-buttons a {
-  text-decoration: none;
-  padding: 14px;
-  border-radius: 30px;
-  font-weight: 600;
-  text-align: center;
-  font-size: 15px;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.wa-btn { background: #25d366; }
-.ms-btn { background: #1877f2; }
-.call-btn { background: #0f9d8a; }
-
-.extra-order-buttons a:hover {
-  transform: scale(1.03);
-}
-
-/* SIDE MENU STYLE */
-
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 260px;
-  height: 100%;
-  background: #fff;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-  transition: 0.3s;
-  z-index: 2000;
-  padding-top: 20px;
-}
-
-.side-menu a {
-  display: block;
-  padding: 15px 20px;
-  text-decoration: none;
-  color: #333;
-  border-bottom: 1px solid #eee;
-  font-weight: 500;
-}
-
-.side-menu a:hover {
-  background: #f5f5f5;
-}
-
-.side-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  font-weight: 600;
-  border-bottom: 1px solid #ddd;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: none;
-  z-index: 1500;
-}
-
-/* SEARCH BOX */
-.search-box{
-  display:none;
-  padding:15px;
-  background:#fff;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-.search-box input{
-  width:100%;
-  padding:12px 15px;
-  border:2px solid #e60000;
-  border-radius:30px;
-  font-size:16px;
-  outline:none;
-}
-
-/* সার্চ বক্স ফুল উইডথ নিচে নামানো */
-.search-box,
-.search-container{
-  position: absolute;
-  top: 60px;   /* হেডারের নিচে নামাবে */
-  left: 0;
-  width: 100%;
-  background: #fff;
-  padding: 15px;
-  z-index: 999;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-/* ইনপুট পুরো চওড়া */
-.search-box input,
-.search-container input{
-  width: 100%;
-  padding: 12px 18px;
-  border-radius: 30px;
-  border: 2px solid #e60000;
-  font-size: 16px;
-}
-
-.header-icons a{
-  color: white;
-  text-decoration: none;
-}
-
-/* MODAL ভিতরের footer full width fix */
-
-.modal-content .footer{
-  margin-left:-20px;
-  margin-right:-20px;
-  margin-bottom:-20px;
-  width:calc(100% + 40px);
-  border-radius:0;
-}
-
-
-
-/* ===== MODAL PRODUCT PREVIEW ===== */
-
-.modal-product-preview{
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.modal-product-preview img{
-  width:100%;
-  max-height:280px;
-  object-fit:cover;
-  border-radius:15px;
-  margin-bottom:15px;
-}
-
-.modal-product-desc{
-  background:#f5f5f5;
-  padding:12px;
-  border-radius:10px;
-  font-size:14px;
-  color:#333;
-  text-align:left;
-}
-
-#modalProductDesc{
-  margin:15px 0;
-  font-size:14px;
-  line-height:1.6;
-  white-space:pre-line;   /* লাইন ব্রেক ঠিক রাখবে */
-  word-break:break-word;  /* লম্বা লেখা ভাঙবে */
-}
-
-
-
-</style>
+    @media (max-width: 768px) {
+      .products { grid-template-columns: repeat(2, 1fr); gap: 14px; padding-bottom: 70px; }
+      .info { padding: 12px 14px 14px; }
+      .info h3 { font-size: 14px; }
+      .price { font-size: 18px; }
+      .old-price { font-size: 13px; }
+      .btn-order { padding: 10px 20px; font-size: 13px; }
+      .hero { height: 170px; margin: 10px 12px; }
+      .slide-content h2 { font-size: 20px; }
+      .section-title { font-size: 22px; margin: 24px 0 16px; }
+      .modal-content { padding: 18px 16px 24px; }
+      .thumb-gallery .thumb-wrapper { width: 55px; height: 55px; }
+    }
+    @media (max-width: 480px) {
+      .products { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .hero { height: 150px; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ======= HEADER START ======= -->
+<!-- HEADER -->
 <header class="top-header">
-
-
-<!-- SEARCH BAR START -->
-<div class="search-box" id="searchBox">
-  <input type="text" id="searchInput" placeholder="Search products...">
-</div>
-<!-- SEARCH BAR END -->
-
-  <div class="menu-icon">
-   <i class="fas fa-bars" onclick="openMenu()"></i>
-  </div>
-
-  <div class="logo">
-    Safe<span>Bd</span>
-  </div>
-
+  <div class="menu-icon"><i class="fas fa-bars" onclick="openMenu()"></i></div>
+  <div class="logo">Safe<span>Bd</span></div>
   <div class="header-icons">
-   <i class="fas fa-search" id="searchIcon"></i>
-   <a href="tel:01770019872">
-  <i class="fas fa-phone"></i>
-</a>
+    <i class="fas fa-search" id="searchIcon"></i>
+    <a href="tel:01770019872" style="color:#fff;"><i class="fas fa-phone"></i></a>
     <i class="far fa-user"></i>
-
-    <div class="cart-icon">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="cart-count">1</span>
-    </div>
+    <div class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
   </div>
-
-</header>
-<!-- ======= HEADER END ======= -->
-
-<header>
-  <h1></h1>
 </header>
 
+<!-- SEARCH -->
+<div class="search-box" id="searchBox">
+  <input type="text" id="searchInput" placeholder="🔍 পণ্য খুঁজুন...">
+</div>
+
+<!-- HERO -->
 <div class="hero">
   <div class="slides">
     <div class="slide active" style="background-image: url('https://raw.githubusercontent.com/motiur34245/Sunnah-book-corner/main/photo_2026-04-02_13-02-15%20(2).jpg');">
-      <div class="slide-content">
-        <h2>Baby Safety</h2>
-        <p>এখনই কিনুন • এক্সক্লুসিভ অফার • লিমিটেড এডিশন</p>
-      </div>
+      <div class="slide-content"><h2>বেবি সেফটি</h2><p>বাচ্চাদের নিরাপদ রাখুন • এক্সক্লুসিভ অফার</p></div>
     </div>
     <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1607082349566-187342859522?auto=format&fit=crop&q=80&w=2000');">
-      <div class="slide-content">
-        <h2>লাক্সারি লাইফস্টাইল</h2>
-        <p>উচ্চমানের পণ্য • দারুণ দামে • আপনার জন্য</p>
-      </div>
+      <div class="slide-content"><h2>লাক্সারি লাইফস্টাইল</h2><p>প্রিমিয়াম পণ্য • সেরা দামে</p></div>
     </div>
     <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=2000');">
-      <div class="slide-content">
-        <h2>এক্সক্লুসিভ ডিল</h2>
-        <p>সেরা ব্র্যান্ড • প্রিমিয়াম কোয়ালিটি • আজই অর্ডার</p>
-      </div>
+      <div class="slide-content"><h2>এক্সক্লুসিভ অফার</h2><p>লিমিটেড সময়ের জন্য • এখনই অর্ডার করুন</p></div>
     </div>
   </div>
+  <button class="prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+  <button class="next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+  <div class="dots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+  </div>
+</div>
+
 <!-- SIDE MENU -->
 <div id="sideMenu" class="side-menu">
-
   <div class="side-header">
-    <span>Menu</span>
+    <h3>Safe<span>Bd</span></h3>
     <i class="fas fa-times" onclick="closeMenu()"></i>
   </div>
-
-  <a href="#">Home</a>
-  <a href="#">BABY CARE</a>
-  <a href="#">HOME & KITCHEN</a>
-  <a href="#">GARDEN & OUTDOOR</a>
-
+  <a href="#"><i class="fas fa-home"></i> হোম</a>
+  <a href="#"><i class="fas fa-baby"></i> বেবি কেয়ার</a>
+  <a href="#"><i class="fas fa-home"></i> হোম & কিচেন</a>
+  <a href="#"><i class="fas fa-tree"></i> গার্ডেন & আউটডোর</a>
+  <a href="#"><i class="fas fa-tags"></i> অফার</a>
+  <a href="#"><i class="fas fa-phone"></i> যোগাযোগ</a>
 </div>
-
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-  <button class="prev"><i class="fas fa-chevron-left"></i></button>
-  <button class="next"><i class="fas fa-chevron-right"></i></button>
-
-  <div class="dots">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-</div>
-
+<!-- PRODUCTS -->
 <div class="container">
-  <h2 class="section-title">আমাদের ফিচার্ড প্রোডাক্ট</h2>
-
+  <h2 class="section-title">ফিচার্ড <span>প্রোডাক্ট</span></h2>
   <div class="products" id="products-list"></div>
 </div>
 
+<!-- MODAL -->
 <div class="modal" id="orderModal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
-   
-<!-- 🔥 PRODUCT PREVIEW START -->
-<div class="modal-product-preview">
-  <img id="modalProductImage" src="" alt="Product Image">
-  <div class="modal-product-desc">
-    <p id="modalProductDesc"></p>
-  </div>
-</div>
-<!-- 🔥 PRODUCT PREVIEW END -->
 
-
-
- <h2 style="text-align:center; color:var(--primary); margin-bottom:1.5rem;">অর্ডার কনফার্ম করুন</h2>
-    <p id="selectedProduct" style="text-align:center; font-size:1.4rem; font-weight:600; margin-bottom:2rem;"></p>
-
-    <form id="orderForm">
-      <label>আপনার নাম *</label>
-      <input type="text" id="name" required>
-
-      <label>মোবাইল নম্বর *</label>
-      <input type="tel" id="phone" required>
-
-   <!--  <label>জেলা *</label>
-    
-     
-<input type="text" id="district">
-
-      <label>উপজেলা *</label>
-      <input type="text" id="upazila" >
-
-      <label>থানা *</label>
-      <input type="text" id="thana" >
-
-      <label>ইউনিয়ন / ওয়ার্ড *</label>
-      <input type="text" id="union" > -->
-
-      <label>বিস্তারিত ঠিকানা *</label>
-      <textarea id="address" rows="3" required></textarea>
-
-      <button type="submit" class="btn-submit">অর্ডার প্লেস করুন</button>
-
-<!-- 🔽 এখানে বসাবে (submit বাটনের নিচে) -->
-<div class="extra-order-buttons">
-
-  <a href="https://wa.me/8801877870942" target="_blank" class="wa-btn">
-    <i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন
-  </a>
-
-  <a href="https://m.me/yourpageusername" target="_blank" class="ms-btn">
-    <i class="fab fa-facebook-messenger"></i> Messenger এ অর্ডার করুন
-  </a>
-
-  <a href="tel:01877870942" class="call-btn">
-    <i class="fas fa-phone"></i> কল করুন - 01877870942
-  </a>
-
-</div>
-    </form>
-
-
-
-<!-- ===== MODAL FOOTER START ===== -->
-<div class="footer">
-  <div class="footer-container">
-
-    <div class="footer-col">
-      <h3>Need Help?</h3>
-      <p><i class="fas fa-phone"></i> 01877870942</p>
-      <p><i class="fas fa-envelope"></i>motiur34245@gmail.com</p>
-      <p><i class="fas fa-map-marker-alt"></i>টেপামধুপুর কাউনিয়া রংপুর </p>
+    <!-- Full Square Image -->
+    <div class="modal-image-wrapper">
+      <img id="modalProductImage" src="" alt="Product">
     </div>
 
-    <div class="footer-col">
-      <h3>Get in Touch</h3>
-      <div class="social-icons">
-        <a href="https://www.facebook.com/profile.php?id=61583997375262"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
-        <a href="https://wa.me/8801770019872"><i class="fab fa-whatsapp"></i></a>
+    <div class="thumb-gallery" id="thumbGallery"></div>
+
+    <div class="modal-product-desc">
+      <p id="modalProductDesc"></p>
+    </div>
+
+    <div class="checkout-box">
+      <div class="delivery-badge"><i class="fas fa-truck"></i> হোম ডেলিভারি</div>
+      <div class="qty-row">
+        <label>পরিমাণ:</label>
+        <div class="qty-control">
+          <button onclick="changeQty(-1)">−</button>
+          <input type="number" id="productQty" value="1" min="1" max="99" readonly>
+          <button onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+      <div class="total-row">
+        <span>মোট দাম:</span>
+        <span class="total-price" id="totalPriceDisplay">৳ ০</span>
       </div>
     </div>
 
+    <div class="order-form-container">
+      <h3><i class="fas fa-clipboard-list"></i> অর্ডার ফর্ম</h3>
+      <input type="text" id="orderName" placeholder="আপনার নাম *">
+      <input type="tel" id="orderPhone" placeholder="মোবাইল নম্বর *">
+      <textarea id="orderAddress" placeholder="বিস্তারিত ঠিকানা *"></textarea>
+      <button class="btn-submit-order" id="submitOrderBtn">
+        <i class="fas fa-check-circle"></i> অর্ডার কনফার্ম করুন
+      </button>
+    </div>
+
+    <div class="extra-order-buttons">
+      <a href="https://wa.me/8801770019872" target="_blank" class="wa-btn"><i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন</a>
+      <a href="https://m.me/yourpageusername" target="_blank" class="ms-btn"><i class="fab fa-facebook-messenger"></i> Messenger এ অর্ডার করুন</a>
+      <a href="tel:01770019872" class="call-btn"><i class="fas fa-phone"></i> কল করুন - 01770019872</a>
+    </div>
   </div>
 </div>
 
-<!-- SIMPLE IMAGE VIEW -->
-<div id="imgPreview" class="img-preview">
-  <span onclick="closePreview()" class="close-preview">&times;</span>
-  <img id="previewImage">
-</div>
+<button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
 
-
-
-
-
-<!-- ===== MODAL FOOTER END ===== -->
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div>
+      <h3>📞 সাহায্য</h3>
+      <p><i class="fas fa-phone"></i> 01770019872</p>
+      <p><i class="fas fa-envelope"></i> motiur34245@gmail.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> টেপামধুপুর, কাউনিয়া, রংপুর</p>
+    </div>
+    <div>
+      <h3>🔗 সোশ্যাল মিডিয়া</h3>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
   </div>
-</div>
+  <div class="footer-bottom">© 2026 Safe Bd. সর্বস্বত্ব সংরক্ষিত</div>
+</footer>
 
-<button class="theme-toggle" id="themeToggle">
-  <i class="fas fa-moon"></i>
-</button>
-
-<!-- Firebase SDK (শুধু এটাই যোগ করা) -->
+<!-- FIREBASE SDK -->
 <script type="module">
-
-/* ================= FIREBASE ================= */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { 
-  getFirestore, 
-  collection, 
-  addDoc, 
-  getDocs, 
-  serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCa3qjuHUkFJwOEv1Cbp-E0AIkihCW4zKY",
@@ -968,377 +810,282 @@ const firebaseConfig = {
   messagingSenderId: "728093683205",
   appId: "1:728093683205:web:198063ce6b85f07adeb66c"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* ================= GLOBAL ================= */
-
 let products = [];
-let selectedId = null;
-
-/* ================= LOAD PRODUCTS ================= */
+let selectedProduct = null;
 
 async function loadProducts() {
-  try {
-    const snapshot = await getDocs(collection(db, "products"));
-    products = [];
-
-    snapshot.forEach(doc => {
-      products.push({ id: doc.id, ...doc.data() });
-    });
-
-    renderProducts();
-  } catch (err) {
-    console.error("Product Load Error:", err);
-  }
+  const snapshot = await getDocs(collection(db, "products"));
+  products = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    let images = [];
+    if (data.images && Array.isArray(data.images)) {
+      images = data.images;
+    } else if (data.image) {
+      images = [data.image];
+    }
+    products.push({ docId: doc.id, ...data, images });
+  });
+  renderProducts();
 }
-
-/* ================= RENDER PRODUCTS ================= */
 
 function renderProducts() {
-
-  const container = document.getElementById("products-list");
-  container.innerHTML = "";
-
-  products.forEach((p, index) => {
-
-    const old = Math.round(p.price / (1 - p.discount / 100));
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="discount-badge">-${p.discount}% OFF</div>
-      <img src="${p.image}" alt="${p.name}">
-      <div class="info">
-        <h3>${p.name}</h3>
-        <div>
-          <span class="price">৳ ${p.price}</span>
-          <span class="old-price">৳ ${old}</span>
-        </div>
-        <button class="btn-order" style="color:white;">অর্ডার করুন</button>
-      </div>
-    `;
-
-    card.querySelector(".btn-order")
-        .addEventListener("click", () => openOrder(p.id));
-
-    container.appendChild(card);
-    setTimeout(() => card.classList.add("visible"), 100 * index);
-  });
-}
-
-/* ================= OPEN ORDER MODAL ================= */
-
-window.openOrder = function(id) {
-
-  selectedId = id;
-
-  const product = products.find(p => p.id === id);
-  if (!product) return;
-
-  document.getElementById("selectedProduct").innerText =
-    `${product.name} — ৳ ${product.price} (ছাড় ${product.discount}%)`;
-
-  document.getElementById("modalProductImage").src = product.image;
-  document.getElementById("modalProductDesc").textContent =
-    product.description || "";
-
-  document.getElementById("orderModal").style.display = "flex";
-}
-
-/* ================= CLOSE MODAL ================= */
-
-window.closeModal = function() {
-  document.getElementById("orderModal").style.display = "none";
-  document.getElementById("orderForm").reset();
-}
-
-/* ================= ORDER SUBMIT ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const form = document.getElementById("orderForm");
-
-  form.addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    if (!selectedId) {
-      
-      return;
-    }
-
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const address = document.getElementById("address").value.trim();
-
-    if (!name || !phone || !address) {
-      alert("নাম, মোবাইল এবং ঠিকানা অবশ্যই পূরণ করুন");
-      return;
-    }
-
-    const product = products.find(p => p.id === selectedId);
-    if (!product) {
-      alert("পণ্য পাওয়া যায়নি");
-      return;
-    }
-
-    try {
-
-      await addDoc(collection(db, "orders"), {
-        productId: selectedId,
-        productName: product.name,
-        price: product.price,
-        discount: product.discount || 0,
-        name: name,
-        phone: phone,
-        district: "নেই",
-        upazila: "নেই",
-        thana: "নেই",
-        union: "নেই",
-        address: address,
-        date: new Date().toLocaleString("bn-BD"),
-        createdAt: serverTimestamp()
-      });
-
-fbq('track', 'Purchase', {
-value: product.price,
-currency: 'BDT'
-});
-      
-      window.location.href = "success.html";
-
-    } catch (err) {
-      console.error("Order Error:", err);
-      alert("অর্ডার করতে সমস্যা হয়েছে");
-    }
-
-  });
-
-});
-
-/* ================= INIT ================= */
-
-loadProducts();
-
-</script>
-<footer class="footer">
-  <div class="footer-container">
-
-    <div class="footer-col">
-      <h3>Need Help?</h3>
-      <p><i class="fas fa-phone"></i> 01770019872</p>
-      <p><i class="fas fa-envelope"></i>sunnahbookshopbd@gmail.com</p>
-      <p><i class="fas fa-map-marker-alt"></i>টেপামধুপুর কাউনিয়া রংপুর </p>
-    </div>
-
-    <div class="footer-col">
-      <h3>Get in Touch</h3>
-      <div class="social-icons">
-        <a href="https://www.facebook.com/profile.php?id=61583997375262" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://youtube.com/yourchannel" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="https://instagram.com/yourid" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://tiktok.com/@yourid" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://wa.me/8801877870942" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      </div>
-    </div>
-
-    <div class="footer-col">
-      <h3>Related Page</h3>
-      <p><a href="#">Terms & Condition</a></p>
-      <p><a href="#">Returns & Replacement Policy</a></p>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © 2026 Your Brand. All Rights Reserved
-  </div>
-</footer>
-<script>
-function openMenu() {
-  document.getElementById("sideMenu").style.left = "0";
-  document.getElementById("overlay").style.display = "block";
-}
-
-
-
-
-function closeMenu() {
-  document.getElementById("sideMenu").style.left = "-260px";
-  document.getElementById("overlay").style.display = "none";
-}
-
-/* SEARCH TOGGLE */
-const searchIcon = document.getElementById("searchIcon");
-const searchBox = document.getElementById("searchBox");
-const searchInput = document.getElementById("searchInput");
-
-searchIcon.addEventListener("click", () => {
-  if(searchBox.style.display === "block"){
-    searchBox.style.display = "none";
-  } else {
-    searchBox.style.display = "block";
-    searchInput.focus();
-  }
-});
-
-
-
-function renderFiltered(data){
-  const cont = document.getElementById('products-list');
-  cont.innerHTML = '';
-
-  data.forEach((p, index) => {
+  const container = document.getElementById('products-list');
+  container.innerHTML = '';
+  products.forEach((p, idx) => {
     const old = Math.round(p.price / (1 - p.discount / 100));
     const card = document.createElement('div');
     card.className = 'card';
-
     card.innerHTML = `
-      <div class="discount-badge">-${p.discount}% OFF</div>
-      <img src="${p.image}" alt="${p.name}">
+      <div style="position:relative;">
+        <div class="discount-badge">-${p.discount}%</div>
+        <div class="image-wrapper">
+          <img src="${p.image || p.images?.[0] || ''}" alt="${p.name}" loading="lazy">
+        </div>
+      </div>
       <div class="info">
         <h3>${p.name}</h3>
         <div>
           <span class="price">৳ ${p.price}</span>
           <span class="old-price">৳ ${old}</span>
         </div>
-        <button class="btn-order" style="color:white;">অর্ডার করুন</button>
+        <button class="btn-order">অর্ডার করুন</button>
       </div>
     `;
-
-    card.querySelector(".btn-order").addEventListener("click", () => openOrder(p.id));
-    cont.appendChild(card);
+    card.querySelector('.btn-order').addEventListener('click', (e) => {
+      e.stopPropagation();
+      openProductModal(p.docId);
+    });
+    card.addEventListener('click', () => openProductModal(p.docId));
+    container.appendChild(card);
+    setTimeout(() => card.classList.add('visible'), 100 * idx);
   });
 }
-</script>
 
-<script>
+window.openProductModal = function(docId) {
+  const product = products.find(p => p.docId === docId);
+  if (!product) return;
+  selectedProduct = product;
 
-/* ====== ULTIMATE SEARCH FIX (STOP ALL OLD SEARCH) ====== */
+  const mainImg = document.getElementById('modalProductImage');
+  const desc = document.getElementById('modalProductDesc');
+  const gallery = document.getElementById('thumbGallery');
 
-document.addEventListener("DOMContentLoaded", function(){
+  const images = product.images && product.images.length ? product.images : [product.image || ''];
+  mainImg.src = images[0] || '';
+  desc.textContent = product.description || '';
 
-  const newInput = document.getElementById("searchInput");
-  const container = document.getElementById("products-list");
+  gallery.innerHTML = '';
+  images.forEach((img, idx) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'thumb-wrapper' + (idx === 0 ? ' active-thumb' : '');
+    wrapper.innerHTML = `<img src="${img}" alt="thumbnail">`;
+    wrapper.addEventListener('click', () => {
+      mainImg.src = img;
+      gallery.querySelectorAll('.thumb-wrapper').forEach(el => el.classList.remove('active-thumb'));
+      wrapper.classList.add('active-thumb');
+    });
+    gallery.appendChild(wrapper);
+  });
 
-  if(!newInput || !container) return;
+  document.getElementById('productQty').value = 1;
+  document.getElementById('orderName').value = '';
+  document.getElementById('orderPhone').value = '';
+  document.getElementById('orderAddress').value = '';
+  updateTotal();
+  document.getElementById('orderModal').style.display = 'flex';
+};
 
-  // 🔥 পুরোনো সব input event মুছে ফেলা
-  const clonedInput = newInput.cloneNode(true);
-  newInput.parentNode.replaceChild(clonedInput, newInput);
+function updateTotal() {
+  const qty = parseInt(document.getElementById('productQty').value) || 1;
+  const price = selectedProduct ? selectedProduct.price : 0;
+  const total = qty * price;
+  document.getElementById('totalPriceDisplay').textContent = `৳ ${total}`;
+  document.getElementById('cartCount').textContent = qty;
+}
 
-  // 🔥 নতুন clean event যোগ করা
-  clonedInput.addEventListener("input", function(){
+window.changeQty = function(step) {
+  const input = document.getElementById('productQty');
+  let val = parseInt(input.value) || 1;
+  val = Math.max(1, Math.min(99, val + step));
+  input.value = val;
+  updateTotal();
+};
 
-    const keyword = this.value.toLowerCase().trim();
-    const cards = Array.from(container.querySelectorAll(".card"));
+document.getElementById('submitOrderBtn').addEventListener('click', async () => {
+  if (!selectedProduct) {
+    alert('পণ্য নির্বাচন করুন!');
+    return;
+  }
 
-    // সব কার্ড দেখাও (force show)
-    cards.forEach(card => card.style.display = "block");
+  const name = document.getElementById('orderName').value.trim();
+  const phone = document.getElementById('orderPhone').value.trim();
+  const address = document.getElementById('orderAddress').value.trim();
+  const qty = parseInt(document.getElementById('productQty').value) || 1;
+  const total = qty * selectedProduct.price;
 
-    // শুধু order পরিবর্তন
-    cards.sort((a,b)=>{
+  if (!name || !phone || !address) {
+    alert('দয়া করে নাম, মোবাইল এবং ঠিকানা পূরণ করুন!');
+    return;
+  }
 
-      const nameA = a.querySelector("h3")?.innerText.toLowerCase() || "";
-      const nameB = b.querySelector("h3")?.innerText.toLowerCase() || "";
+  try {
+    await addDoc(collection(db, 'orders'), {
+      productId: selectedProduct.docId,
+      productName: selectedProduct.name,
+      price: selectedProduct.price,
+      discount: selectedProduct.discount || 0,
+      qty: qty,
+      total: total,
+      name: name,
+      phone: phone,
+      address: address,
+      district: 'নেই',
+      upazila: 'নেই',
+      thana: 'নেই',
+      union: 'নেই',
+      date: new Date().toLocaleString('bn-BD'),
+      createdAt: serverTimestamp()
+    });
+    closeModal();
+window.location.href = "success.html";
+  } catch (err) {
+    alert('❌ অর্ডার করতে সমস্যা হয়েছে');
+    console.error(err);
+  }
+});
 
-      return score(nameA, keyword) - score(nameB, keyword);
+window.closeModal = function() {
+  document.getElementById('orderModal').style.display = 'none';
+};
 
+// Theme toggle
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const html = document.documentElement;
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// Side menu
+window.openMenu = function() {
+  document.getElementById('sideMenu').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+};
+window.closeMenu = function() {
+  document.getElementById('sideMenu').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+};
+
+// Search
+document.getElementById('searchIcon').addEventListener('click', () => {
+  const box = document.getElementById('searchBox');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+});
+document.getElementById('searchInput').addEventListener('input', function() {
+  const keyword = this.value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    const name = card.querySelector('h3')?.innerText.toLowerCase() || '';
+    card.style.display = name.includes(keyword) ? '' : 'none';
+  });
+});
+
+// Hero slider
+let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+window.goToSlide = function(n) {
+  slideIndex = n;
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  slides[n].classList.add('active');
+  dots[n].classList.add('active');
+};
+
+window.nextSlide = function() {
+  slideIndex = (slideIndex + 1) % slides.length;
+  goToSlide(slideIndex);
+};
+
+window.prevSlide = function() {
+  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+  goToSlide(slideIndex);
+};
+
+setInterval(nextSlide, 4500);
+
+loadProducts();
+
+
+window.addEventListener("load", () => {
+
+  function compactModal() {
+    const modal = document.querySelector(".modal-content");
+    if (!modal) return;
+
+    // Modal
+    modal.style.padding = "10px";
+    modal.style.borderRadius = "16px 16px 0 0";
+    modal.style.maxHeight = "100vh";
+
+    // Main Image
+    const img = document.querySelector(".modal-product-img");
+    if (img) {
+      img.style.height = "190px";
+      img.style.maxHeight = "190px";
+      img.style.margin = "5px 0";
+    }
+
+    // Thumbnails
+    document.querySelectorAll(".modal-thumbnails img").forEach(el => {
+      el.style.width = "48px";
+      el.style.height = "48px";
     });
 
-    cards.forEach(card => container.appendChild(card));
+    const thumbs = document.querySelector(".modal-thumbnails");
+    if (thumbs) thumbs.style.margin = "6px 0";
 
-  });
+    // Title
+    const title = document.getElementById("modalName");
+    if (title) title.style.margin = "6px 0";
+
+    // Description
+    const desc = document.querySelector(".modal-desc");
+    if (desc) {
+      desc.style.padding = "10px";
+      desc.style.margin = "8px 0";
+      desc.style.fontSize = "14px";
+    }
+
+    // Checkout Box
+    const box = document.querySelector(".checkout-box");
+    if (box) {
+      box.style.padding = "10px";
+      box.style.margin = "8px 0";
+    }
+
+    // Form
+    document.querySelectorAll(".order-form-modal input,.order-form-modal textarea").forEach(el => {
+      el.style.marginBottom = "8px";
+      el.style.padding = "10px";
+    });
+
+    // Extra Buttons
+    const btns = document.querySelector(".extra-buttons");
+    if (btns) btns.style.marginTop = "8px";
+  }
+
+  // Modal খুললেই Apply হবে
+  const oldOpen = window.openProductModal;
+  window.openProductModal = function (...args) {
+    oldOpen.apply(this, args);
+    setTimeout(compactModal, 50);
+  };
 
 });
-
-
-function score(name, keyword){
-
-  if(keyword === "") return 3;
-
-  if(name.startsWith(keyword)) return 0;
-
-  if(name.includes(keyword)) return 1;
-
-  return 2; // মিল না থাকলেও থাকবে
-}
-
 </script>
-
-<script>
-
-/* ===== SIMPLE FINAL ORDER FIX ===== */
-
-document.addEventListener("DOMContentLoaded", function(){
-
-  const form = document.getElementById("orderForm");
-  if(!form) return;
-
-  form.addEventListener("submit", async function(e){
-
-    e.preventDefault();
-
-    if(typeof selectedId === "undefined" || !selectedId){
-      
-      return;
-    }
-
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const address = document.getElementById("address").value.trim();
-
-    if(!name || !phone || !address){
-      alert("নাম, মোবাইল এবং ঠিকানা অবশ্যই পূরণ করুন");
-      return;
-    }
-
-    try{
-
-      const prod = products.find(p => p.id == selectedId);
-      if(!prod){
-        alert("পণ্য পাওয়া যায়নি");
-        return;
-      }
-
-      await addDoc(collection(db, "orders"), {
-        productId: selectedId,
-        productName: prod.name,
-        price: prod.price,
-        discount: prod.discount || 0,
-        name: name,
-        phone: phone,
-        district: "নেই",
-        upazila: "নেই",
-        thana: "নেই",
-        union: "নেই",
-        address: address,
-        date: new Date().toLocaleString("bn-BD"),
-        createdAt: serverTimestamp()
-      });
-
-      alert("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
-      form.reset();
-      if(typeof closeModal === "function") closeModal();
-
-    }catch(err){
-      console.error(err);
-      alert("অর্ডার করতে সমস্যা হয়েছে");
-    }
-
-  });
-
-});
-
-</script>
-
-
-
-
-
-
 </body>
   </html>
