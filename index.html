@@ -1020,70 +1020,10 @@ setInterval(nextSlide, 4500);
 loadProducts();
 
 
-window.addEventListener("load", () => {
 
-  function compactModal() {
-    const modal = document.querySelector(".modal-content");
-    if (!modal) return;
+  
 
-    // Modal
-    modal.style.padding = "10px";
-    modal.style.borderRadius = "16px 16px 0 0";
-    modal.style.maxHeight = "100vh";
 
-    // Main Image
-    const img = document.querySelector(".modal-product-img");
-    if (img) {
-      img.style.height = "190px";
-      img.style.maxHeight = "190px";
-      img.style.margin = "5px 0";
-    }
-
-    // Thumbnails
-    document.querySelectorAll(".modal-thumbnails img").forEach(el => {
-      el.style.width = "48px";
-      el.style.height = "48px";
-    });
-
-    const thumbs = document.querySelector(".modal-thumbnails");
-    if (thumbs) thumbs.style.margin = "6px 0";
-
-    // Title
-    const title = document.getElementById("modalName");
-    if (title) title.style.margin = "6px 0";
-
-    // Description
-    const desc = document.querySelector(".modal-desc");
-    if (desc) {
-      desc.style.padding = "10px";
-      desc.style.margin = "8px 0";
-      desc.style.fontSize = "14px";
-    }
-
-    // Checkout Box
-    const box = document.querySelector(".checkout-box");
-    if (box) {
-      box.style.padding = "10px";
-      box.style.margin = "8px 0";
-    }
-
-    // Form
-    document.querySelectorAll(".order-form-modal input,.order-form-modal textarea").forEach(el => {
-      el.style.marginBottom = "8px";
-      el.style.padding = "10px";
-    });
-
-    // Extra Buttons
-    const btns = document.querySelector(".extra-buttons");
-    if (btns) btns.style.marginTop = "8px";
-  }
-
-  // Modal খুললেই Apply হবে
-  const oldOpen = window.openProductModal;
-  window.openProductModal = function (...args) {
-    oldOpen.apply(this, args);
-    setTimeout(compactModal, 50);
-  };
 
 });
 </script>
