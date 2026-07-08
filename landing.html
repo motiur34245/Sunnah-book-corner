@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>Safe Bd - চেকআউট</title>
+  <title>Safe Bd</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
@@ -12,6 +12,7 @@
       --primary: #b8860b;
       --primary-dark: #9c6f00;
       --primary-light: #d4a040;
+      --accent: #1a1a1a;
       --bg: #f8f9fc;
       --card-bg: #ffffff;
       --text: #1a1a2e;
@@ -38,114 +39,98 @@
       overflow-x: hidden;
     }
 
-    /* ===== CLOSE BUTTON ===== */
-    .close-btn {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      width: 42px;
-      height: 42px;
-      background: var(--card-bg);
-      color: var(--text);
-      text-decoration: none;
-      font-size: 22px;
-      font-weight: 500;
+    /* ===== HEADER ===== */
+    .top-header {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+    }
+    .menu-icon { font-size: 22px; cursor: pointer; color: #fff; transition: var(--transition); }
+    .menu-icon:hover { transform: scale(1.1); }
+    .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+    .logo span { color: var(--primary); }
+    .header-icons { display: flex; align-items: center; gap: 18px; font-size: 19px; color: #fff; }
+    .header-icons i { cursor: pointer; transition: var(--transition); }
+    .header-icons i:hover { color: var(--primary); transform: scale(1.1); }
+    .cart-icon { position: relative; }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #e60000;
+      color: #fff;
+      font-size: 10px;
+      width: 19px;
+      height: 19px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      z-index: 9999;
-      transition: var(--transition);
-      border: none;
-      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(230,0,0,0.3);
     }
-    .close-btn:hover { transform: scale(1.08); background: var(--primary); color: #fff; }
 
-    /* ===== HEADER ===== */
-    .landing-header {
-      background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+    /* ===== SEARCH ===== */
+    .search-box {
+      display: none;
       padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      background: var(--card-bg);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
-    .landing-header .logo {
-      font-size: 22px;
-      font-weight: 900;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .search-box input {
+      width: 100%;
+      padding: 12px 18px;
+      border: 2px solid #e5e7eb;
+      border-radius: 30px;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
     }
-    .landing-header .logo span { color: var(--primary); }
-    .landing-header .logo i { color: var(--primary); font-size: 24px; }
-
-    /* ===== CONTAINER ===== */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 16px;
-    }
+    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(184,134,11,0.1); }
 
     /* ===== LOADING ===== */
     .loading-spinner {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       min-height: 60vh;
-      gap: 16px;
-    }
-    .loading-spinner i {
-      font-size: 48px;
+      font-size: 20px;
       color: var(--primary);
+      gap: 14px;
+      flex-direction: column;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #e5e7eb;
+      border-top: 6px solid var(--primary);
+      border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-    .loading-spinner p {
-      color: var(--gray);
-      font-size: 16px;
-    }
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* ===== PRODUCT NOT FOUND ===== */
     .not-found {
       text-align: center;
       padding: 80px 20px;
     }
-    .not-found i {
-      font-size: 64px;
-      color: var(--primary);
-      display: block;
-      margin-bottom: 16px;
-    }
-    .not-found h2 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-    .not-found p {
-      color: var(--gray);
-      margin-bottom: 20px;
-    }
-    .not-found .btn-home {
-      display: inline-block;
-      padding: 12px 32px;
-      background: var(--primary);
-      color: #fff;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: var(--transition);
-    }
-    .not-found .btn-home:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,134,11,0.3); }
+    .not-found i { font-size: 64px; color: var(--gray); margin-bottom: 20px; }
+    .not-found h2 { font-size: 28px; margin-bottom: 10px; }
 
-    /* ===== PRODUCT IMAGE ===== */
+    /* ===== PRODUCT DETAIL ===== */
+    .product-detail {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px 14px 30px;
+    }
     .product-image-wrapper {
       width: 100%;
       aspect-ratio: 1/1;
@@ -155,16 +140,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: var(--shadow);
-      margin-bottom: 16px;
       position: relative;
+      box-shadow: var(--shadow);
     }
     .product-image-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
-    .discount-badge-landing {
+    .discount-badge {
       position: absolute;
       top: 14px;
       right: 14px;
@@ -177,91 +161,67 @@
       box-shadow: 0 4px 12px rgba(184,134,11,0.3);
       z-index: 2;
     }
-
-    /* ===== THUMBNAIL GALLERY ===== */
     .thumb-gallery {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding: 8px 0 16px;
+      padding: 12px 0;
+      scrollbar-width: thin;
     }
-    .thumb-gallery .thumb {
+    .thumb-gallery .thumb-wrapper {
       width: 70px;
       height: 70px;
       flex-shrink: 0;
       border-radius: 10px;
-      overflow: hidden;
       border: 2px solid #e5e7eb;
+      overflow: hidden;
       cursor: pointer;
       transition: var(--transition);
+      background: #f8f9fa;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f8f9fa;
     }
-    .thumb-gallery .thumb:hover { border-color: var(--primary); transform: scale(1.05); }
-    .thumb-gallery .thumb.active { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(184,134,11,0.2); }
-    .thumb-gallery .thumb img {
+    .thumb-gallery .thumb-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+    .thumb-gallery .thumb-wrapper:hover { border-color: var(--primary); transform: scale(1.05); }
+    .thumb-gallery .thumb-wrapper.active-thumb { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(184,134,11,0.2); }
 
-    /* ===== PRODUCT INFO ===== */
-    .product-title {
-      font-size: 24px;
+    .product-name {
+      font-size: 22px;
       font-weight: 700;
-      margin: 8px 0;
+      margin: 10px 0 4px;
     }
-    .product-price {
-      font-size: 28px;
-      font-weight: 900;
-      color: #e60000;
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin: 6px 0;
     }
-    .product-price .old {
-      font-size: 18px;
+    .current-price { font-size: 26px; font-weight: 800; color: #e60000; }
+    .old-price {
       color: var(--gray);
       text-decoration: line-through;
-      margin-left: 10px;
-      font-weight: 400;
+      font-size: 18px;
     }
-    .product-rating {
-      color: #f59e0b;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-    .product-rating span {
-      color: var(--gray);
-      font-size: 13px;
-    }
-
     .product-desc {
       background: var(--bg);
       padding: 14px 16px;
       border-radius: 10px;
       font-size: 14px;
-      line-height: 1.8;
+      line-height: 1.7;
+      margin: 10px 0 16px;
       color: var(--text);
-      margin: 12px 0 16px;
-      white-space: pre-line;
-    }
-    .product-desc li {
-      list-style: none;
-      padding: 4px 0;
-    }
-    .product-desc li i {
-      color: var(--primary);
-      margin-right: 8px;
     }
 
-    /* ===== CHECKOUT BOX ===== */
     .checkout-box {
       background: var(--bg);
       border-radius: 12px;
       padding: 16px;
       margin: 10px 0;
-      border: 1px solid rgba(0,0,0,0.04);
     }
     .checkout-box .delivery-badge {
       display: inline-flex;
@@ -325,7 +285,6 @@
     }
     .total-row .total-price { color: #e60000; font-size: 22px; }
 
-    /* ===== ORDER FORM ===== */
     .order-form-container {
       margin-top: 14px;
       padding: 16px;
@@ -341,8 +300,7 @@
       gap: 8px;
     }
     .order-form-container input,
-    .order-form-container textarea,
-    .order-form-container select {
+    .order-form-container textarea {
       width: 100%;
       padding: 13px 16px;
       border: 2px solid #e5e7eb;
@@ -355,8 +313,7 @@
       transition: var(--transition);
     }
     .order-form-container input:focus,
-    .order-form-container textarea:focus,
-    .order-form-container select:focus {
+    .order-form-container textarea:focus {
       border-color: var(--primary);
       outline: none;
       box-shadow: 0 0 0 4px rgba(184,134,11,0.08);
@@ -377,7 +334,6 @@
     }
     .btn-submit-order:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.3); }
 
-    /* ===== EXTRA BUTTONS ===== */
     .extra-order-buttons {
       margin-top: 14px;
       display: flex;
@@ -404,28 +360,58 @@
     .call-btn { background: #0f9d8a; }
 
     /* ===== FOOTER ===== */
-    .landing-footer {
+    .footer {
       background: linear-gradient(135deg, #1a1a2e, #2d2d44);
       color: #fff;
-      padding: 20px 16px;
-      margin-top: 16px;
-      text-align: center;
-      border-radius: var(--radius);
+      padding: 40px 20px 20px;
+      margin-top: 20px;
+      width: 100%;
     }
-    .landing-footer p { font-size: 13px; color: #888; }
-    .landing-footer a { color: var(--primary); text-decoration: none; }
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .footer h3 { margin-bottom: 14px; font-size: 18px; color: var(--primary); }
+    .footer p { margin-bottom: 8px; font-size: 14px; color: #ccc; }
+    .footer p i { width: 22px; color: var(--primary); }
+    .footer a { color: #ccc; text-decoration: none; transition: var(--transition); }
+    .footer a:hover { color: #fff; }
+    .social-icons { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+    .social-icons a {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      font-size: 18px;
+      transition: var(--transition);
+    }
+    .social-icons a:hover { transform: scale(1.1); background: var(--primary); }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 13px;
+      color: #888;
+    }
 
     .theme-toggle {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 24px;
+      right: 24px;
       background: var(--card-bg);
       color: var(--text);
       border: 2px solid var(--primary);
-      width: 46px;
-      height: 46px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       cursor: pointer;
       box-shadow: var(--shadow);
       z-index: 99;
@@ -433,126 +419,77 @@
     }
     .theme-toggle:hover { transform: scale(1.1) rotate(20deg); background: var(--primary); color: #fff; }
 
-    @media (max-width: 480px) {
-      .product-title { font-size: 20px; }
-      .product-price { font-size: 24px; }
-      .thumb-gallery .thumb { width: 55px; height: 55px; }
-      .container { padding: 12px; }
+    @media (max-width: 768px) {
+      .product-detail { padding: 12px 12px 20px; }
+      .product-name { font-size: 19px; }
+      .current-price { font-size: 22px; }
+      .thumb-gallery .thumb-wrapper { width: 55px; height: 55px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ===== CLOSE BUTTON ===== -->
-<button class="close-btn" onclick="window.location.href='index.html'">✕</button>
-
-<!-- ===== HEADER ===== -->
-<header class="landing-header">
-  <div class="logo"><i class="fas fa-shield-alt"></i> Safe<span>Bd</span></div>
+<!-- HEADER -->
+<header class="top-header">
+  <div class="menu-icon"><i class="fas fa-bars" onclick="openMenu()"></i></div>
+  <div class="logo">Safe<span>Bd</span></div>
+  <div class="header-icons">
+    <i class="fas fa-search" id="searchIcon"></i>
+    <a href="tel:01770019872" style="color:#fff;"><i class="fas fa-phone"></i></a>
+    <i class="far fa-user"></i>
+    <div class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
+  </div>
 </header>
 
-<!-- ===== MAIN ===== -->
-<div class="container" id="mainContainer">
+<!-- SEARCH -->
+<div class="search-box" id="searchBox">
+  <input type="text" id="searchInput" placeholder="🔍 পণ্য খুঁজুন...">
+</div>
 
-  <!-- Loading Spinner -->
+<!-- MAIN CONTENT -->
+<div id="mainContent">
   <div class="loading-spinner" id="loadingSpinner">
-    <i class="fas fa-spinner"></i>
-    <p>পণ্য লোড হচ্ছে...</p>
+    <div class="spinner"></div>
+    <span>পণ্য লোড হচ্ছে...</span>
   </div>
-
-  <!-- Product Content (Hidden by default) -->
-  <div id="productContent" style="display:none;">
-
-    <!-- Product Image -->
-    <div class="product-image-wrapper">
-      <img id="mainImage" src="" alt="Product Image">
-      <div class="discount-badge-landing" id="discountBadge">-0%</div>
-    </div>
-
-    <!-- Thumbnail Gallery -->
-    <div class="thumb-gallery" id="thumbGallery"></div>
-
-    <!-- Product Info -->
-    <h1 class="product-title" id="productTitle"></h1>
-    <div class="product-price" id="productPrice">৳ ০ <span class="old" id="oldPrice"></span></div>
-    <div class="product-rating">
-      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-      <span>(১২ জন ক্রেতা)</span>
-    </div>
-    <div class="product-desc" id="productDesc"></div>
-
-    <!-- Checkout Box -->
-    <div class="checkout-box">
-      <div class="delivery-badge"><i class="fas fa-truck"></i> হোম ডেলিভারি</div>
-      <div class="qty-row">
-        <label>পরিমাণ:</label>
-        <div class="qty-control">
-          <button onclick="changeQty(-1)">−</button>
-          <input type="number" id="productQty" value="1" min="1" max="99" readonly>
-          <button onclick="changeQty(1)">+</button>
-        </div>
-      </div>
-      <div class="total-row">
-        <span>মোট দাম:</span>
-        <span class="total-price" id="totalPriceDisplay">৳ ০</span>
-      </div>
-    </div>
-
-    <!-- Order Form -->
-    <div class="order-form-container">
-      <h3><i class="fas fa-clipboard-list"></i> অর্ডার ফর্ম</h3>
-      <input type="text" id="orderName" placeholder="আপনার নাম *">
-      <input type="tel" id="orderPhone" placeholder="মোবাইল নম্বর *">
-      <input type="text" id="orderDistrict" placeholder="জেলা *">
-      <input type="text" id="orderUpazila" placeholder="উপজেলা *">
-      <input type="text" id="orderThana" placeholder="থানা *">
-      <input type="text" id="orderUnion" placeholder="ইউনিয়ন / ওয়ার্ড *">
-      <textarea id="orderAddress" placeholder="বিস্তারিত ঠিকানা *"></textarea>
-      <button class="btn-submit-order" id="submitOrderBtn">
-        <i class="fas fa-check-circle"></i> অর্ডার কনফার্ম করুন
-      </button>
-    </div>
-
-    <!-- Extra Order Buttons -->
-    <div class="extra-order-buttons">
-      <a href="https://wa.me/8801770019872" target="_blank" class="wa-btn"><i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন</a>
-      <a href="https://m.me/yourpageusername" target="_blank" class="ms-btn"><i class="fab fa-facebook-messenger"></i> Messenger এ অর্ডার করুন</a>
-      <a href="tel:01770019872" class="call-btn"><i class="fas fa-phone"></i> কল করুন - 01770019872</a>
-    </div>
-
-    <!-- Footer -->
-    <div class="landing-footer">
-      <p>© 2026 Safe Bd. সর্বস্বত্ব সংরক্ষিত | <a href="#">প্রাইভেসি পলিসি</a></p>
-    </div>
-  </div>
-
-  <!-- Product Not Found -->
-  <div id="notFoundContent" style="display:none;">
-    <div class="not-found">
-      <i class="fas fa-exclamation-circle"></i>
-      <h2>পণ্যটি পাওয়া যায়নি</h2>
-      <p>আপনি যে পণ্যটি খুঁজছেন তা আমাদের ডাটাবেসে নেই।</p>
-      <a href="index.html" class="btn-home"><i class="fas fa-home"></i> হোমে যান</a>
-    </div>
+  <div id="productContainer" style="display:none;"></div>
+  <div id="notFound" style="display:none;" class="not-found">
+    <i class="fas fa-exclamation-triangle"></i>
+    <h2>পণ্য খুঁজে পাওয়া যায়নি</h2>
+    <p>আপনার অনুরোধকৃত পণ্যটি আমাদের ডাটাবেসে নেই।</p>
   </div>
 </div>
 
-<!-- ===== THEME TOGGLE ===== -->
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div>
+      <h3>📞 সাহায্য</h3>
+      <p><i class="fas fa-phone"></i> 01770019872</p>
+      <p><i class="fas fa-envelope"></i> motiur34245@gmail.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> টেপামধুপুর, কাউনিয়া, রংপুর</p>
+    </div>
+    <div>
+      <h3>🔗 সোশ্যাল মিডিয়া</h3>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Safe Bd. সর্বস্বত্ব সংরক্ষিত</div>
+</footer>
+
 <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
 
 <!-- FIREBASE SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { 
-  getFirestore, 
-  doc, 
-  getDoc, 
-  collection, 
-  addDoc, 
-  serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCa3qjuHUkFJwOEv1Cbp-E0AIkihCW4zKY",
   authDomain: "sunnah-book-corner.firebaseapp.com",
@@ -561,149 +498,179 @@ const firebaseConfig = {
   messagingSenderId: "728093683205",
   appId: "1:728093683205:web:198063ce6b85f07adeb66c"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Get Product ID from URL
+let selectedProduct = null;
+let currentQty = 1;
+
+// Get product ID from URL
 const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get("id");
+const productId = urlParams.get('id');
 
-let currentProduct = null;
-let currentPrice = 0;
-let productImages = [];
+const loadingEl = document.getElementById('loadingSpinner');
+const container = document.getElementById('productContainer');
+const notFound = document.getElementById('notFound');
 
-// ===== THEME TOGGLE =====
-document.getElementById('themeToggle').addEventListener('click', () => {
-  const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-  const icon = document.querySelector('#themeToggle i');
-  if (icon) icon.className = current === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-});
-
-// ===== LOAD PRODUCT =====
 async function loadProduct() {
-  // Show loading spinner
-  document.getElementById('loadingSpinner').style.display = 'flex';
-  document.getElementById('productContent').style.display = 'none';
-  document.getElementById('notFoundContent').style.display = 'none';
-
   if (!productId) {
-    document.getElementById('loadingSpinner').style.display = 'none';
-    document.getElementById('notFoundContent').style.display = 'block';
+    loadingEl.style.display = 'none';
+    notFound.style.display = 'block';
     return;
   }
 
   try {
-    const docRef = doc(db, "products", productId);
+    const docRef = doc(db, 'products', productId);
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      document.getElementById('loadingSpinner').style.display = 'none';
-      document.getElementById('notFoundContent').style.display = 'block';
+      loadingEl.style.display = 'none';
+      notFound.style.display = 'block';
       return;
     }
 
-    const p = docSnap.data();
-    currentProduct = p;
-    currentPrice = p.price || 490;
-
-    // Get images
-    productImages = [];
-    if (p.images && Array.isArray(p.images) && p.images.length) {
-      productImages = p.images;
-    } else if (p.image) {
-      productImages = [p.image];
-    } else {
-      productImages = ['https://raw.githubusercontent.com/motiur34245/Sunnah-book-corner/main/photo_2026-04-02_13-02-15%20(2).jpg'];
+    const data = docSnap.data();
+    let images = [];
+    if (data.images && Array.isArray(data.images)) {
+      images = data.images;
+    } else if (data.image) {
+      images = [data.image];
     }
 
-    // Update UI
-    const oldPrice = Math.round((p.price || 490) / (1 - (p.discount || 0) / 100));
+    selectedProduct = {
+      docId: docSnap.id,
+      ...data,
+      images
+    };
 
-    // Title
-    document.getElementById('productTitle').textContent = p.name || 'বেবি সেফটি ড্রয়ার লক';
+    loadingEl.style.display = 'none';
+    container.style.display = 'block';
+    renderProduct(selectedProduct);
 
-    // Main Image
-    document.getElementById('mainImage').src = productImages[0] || '';
-
-    // Price
-    document.getElementById('productPrice').innerHTML = `৳ ${p.price || 490} <span class="old">৳ ${oldPrice}</span>`;
-    document.getElementById('oldPrice').textContent = `৳ ${oldPrice}`;
-
-    // Discount Badge
-    if (p.discount && p.discount > 0) {
-      document.getElementById('discountBadge').textContent = `-${p.discount}%`;
-      document.getElementById('discountBadge').style.display = 'block';
-    } else {
-      document.getElementById('discountBadge').style.display = 'none';
-    }
-
-    // Description
-    document.getElementById('productDesc').innerHTML = p.description || '';
-
-    // Thumbnails
-    const gallery = document.getElementById('thumbGallery');
-    gallery.innerHTML = '';
-    productImages.forEach((img, idx) => {
-      const thumb = document.createElement('div');
-      thumb.className = 'thumb' + (idx === 0 ? ' active' : '');
-      thumb.innerHTML = `<img src="${img}" alt="Thumb">`;
-      thumb.addEventListener('click', () => {
-        document.getElementById('mainImage').src = img;
-        gallery.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-      });
-      gallery.appendChild(thumb);
-    });
-
-    // Hide loading, show content
-    document.getElementById('loadingSpinner').style.display = 'none';
-    document.getElementById('productContent').style.display = 'block';
-
-    // Update total
-    updateTotal();
-
-  } catch (error) {
-    console.error('Error loading product:', error);
-    document.getElementById('loadingSpinner').style.display = 'none';
-    document.getElementById('notFoundContent').style.display = 'block';
-    document.querySelector('#notFoundContent .not-found p').textContent = error.message;
+  } catch (err) {
+    console.error('Error loading product:', err);
+    loadingEl.style.display = 'none';
+    notFound.style.display = 'block';
   }
 }
 
-// ===== QUANTITY =====
-function updateTotal() {
-  const qty = parseInt(document.getElementById('productQty').value) || 1;
-  const total = qty * (currentPrice || 490);
-  document.getElementById('totalPriceDisplay').textContent = `৳ ${total}`;
+function renderProduct(product) {
+  const oldPrice = Math.round(product.price / (1 - product.discount / 100));
+
+  let html = `
+    <div class="product-detail">
+      <div class="product-image-wrapper">
+        <img id="mainProductImage" src="${product.images[0] || ''}" alt="${product.name}">
+        <div class="discount-badge">-${product.discount}%</div>
+      </div>
+
+      <div class="thumb-gallery" id="thumbGallery">
+  `;
+
+  product.images.forEach((img, idx) => {
+    html += `
+      <div class="thumb-wrapper ${idx === 0 ? 'active-thumb' : ''}" data-img="${img}">
+        <img src="${img}" alt="thumbnail">
+      </div>
+    `;
+  });
+
+  html += `
+      </div>
+
+      <h1 class="product-name">${product.name}</h1>
+      <div class="price-row">
+        <span class="current-price">৳ ${product.price}</span>
+        <span class="old-price">৳ ${oldPrice}</span>
+      </div>
+
+      <div class="product-desc">${product.description || ''}</div>
+
+      <div class="checkout-box">
+        <div class="delivery-badge"><i class="fas fa-truck"></i> হোম ডেলিভারি</div>
+        <div class="qty-row">
+          <label>পরিমাণ:</label>
+          <div class="qty-control">
+            <button onclick="changeQty(-1)">−</button>
+            <input type="number" id="productQty" value="1" min="1" max="99" readonly>
+            <button onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="total-row">
+          <span>মোট দাম:</span>
+          <span class="total-price" id="totalPriceDisplay">৳ ${product.price}</span>
+        </div>
+      </div>
+
+      <div class="order-form-container">
+        <h3><i class="fas fa-clipboard-list"></i> অর্ডার ফর্ম</h3>
+        <input type="text" id="orderName" placeholder="আপনার নাম *">
+        <input type="tel" id="orderPhone" placeholder="মোবাইল নম্বর *">
+        <textarea id="orderAddress" placeholder="বিস্তারিত ঠিকানা *"></textarea>
+        <button class="btn-submit-order" id="submitOrderBtn">
+          <i class="fas fa-check-circle"></i> অর্ডার কনফার্ম করুন
+        </button>
+      </div>
+
+      <div class="extra-order-buttons">
+        <a href="https://wa.me/8801770019872" target="_blank" class="wa-btn"><i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন</a>
+        <a href="https://m.me/yourpageusername" target="_blank" class="ms-btn"><i class="fab fa-facebook-messenger"></i> Messenger এ অর্ডার করুন</a>
+        <a href="tel:01770019872" class="call-btn"><i class="fas fa-phone"></i> কল করুন - 01770019872</a>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
+
+  // Thumbnail click
+  document.querySelectorAll('.thumb-wrapper').forEach(el => {
+    el.addEventListener('click', function() {
+      const imgSrc = this.dataset.img;
+      document.getElementById('mainProductImage').src = imgSrc;
+      document.querySelectorAll('.thumb-wrapper').forEach(t => t.classList.remove('active-thumb'));
+      this.classList.add('active-thumb');
+    });
+  });
+
+  // Update total on load
+  updateTotal();
+
+  // Submit order
+  document.getElementById('submitOrderBtn').addEventListener('click', submitOrder);
 }
 
 window.changeQty = function(step) {
   const input = document.getElementById('productQty');
+  if (!input) return;
   let val = parseInt(input.value) || 1;
   val = Math.max(1, Math.min(99, val + step));
   input.value = val;
+  currentQty = val;
   updateTotal();
 };
 
-// ===== ORDER SUBMIT =====
-document.getElementById('submitOrderBtn').addEventListener('click', async () => {
-  if (!currentProduct) {
+function updateTotal() {
+  const input = document.getElementById('productQty');
+  if (!input || !selectedProduct) return;
+  const qty = parseInt(input.value) || 1;
+  const total = qty * selectedProduct.price;
+  const display = document.getElementById('totalPriceDisplay');
+  if (display) display.textContent = `৳ ${total}`;
+  const cartCount = document.getElementById('cartCount');
+  if (cartCount) cartCount.textContent = qty;
+}
+
+async function submitOrder() {
+  if (!selectedProduct) {
     alert('পণ্য নির্বাচন করুন!');
     return;
   }
 
   const name = document.getElementById('orderName').value.trim();
   const phone = document.getElementById('orderPhone').value.trim();
-  const district = document.getElementById('orderDistrict').value.trim();
-  const upazila = document.getElementById('orderUpazila').value.trim();
-  const thana = document.getElementById('orderThana').value.trim();
-  const union = document.getElementById('orderUnion').value.trim();
   const address = document.getElementById('orderAddress').value.trim();
   const qty = parseInt(document.getElementById('productQty').value) || 1;
-  const total = qty * (currentPrice || 490);
+  const total = qty * selectedProduct.price;
 
   if (!name || !phone || !address) {
     alert('দয়া করে নাম, মোবাইল এবং ঠিকানা পূরণ করুন!');
@@ -712,34 +679,50 @@ document.getElementById('submitOrderBtn').addEventListener('click', async () => 
 
   try {
     await addDoc(collection(db, 'orders'), {
-      productId: productId,
-      productName: currentProduct.name || 'বেবি সেফটি ড্রয়ার লক',
-      price: currentPrice || 490,
-      discount: currentProduct.discount || 0,
+      productId: selectedProduct.docId,
+      productName: selectedProduct.name,
+      price: selectedProduct.price,
+      discount: selectedProduct.discount || 0,
       qty: qty,
       total: total,
       name: name,
       phone: phone,
-      district: district || 'নেই',
-      upazila: upazila || 'নেই',
-      thana: thana || 'নেই',
-      union: union || 'নেই',
       address: address,
+      district: 'নেই',
+      upazila: 'নেই',
+      thana: 'নেই',
+      union: 'নেই',
       date: new Date().toLocaleString('bn-BD'),
       createdAt: serverTimestamp()
     });
-
-    alert(`✅ অর্ডার সফল!\n\nপণ্য: ${currentProduct.name}\nপরিমাণ: ${qty} পিস\nমোট: ৳ ${total}\n\nআপনার ঠিকানায় শীঘ্রই ডেলিভারি দেওয়া হবে।`);
     window.location.href = "success.html";
-
   } catch (err) {
     alert('❌ অর্ডার করতে সমস্যা হয়েছে');
     console.error(err);
   }
+}
+
+// Theme toggle
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const html = document.documentElement;
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
 });
 
-// ===== INIT =====
+// Side menu (dummy)
+window.openMenu = function() {
+  alert('Side menu functionality not needed on landing page');
+};
+window.closeMenu = function() {};
+
+// Search (dummy)
+document.getElementById('searchIcon').addEventListener('click', () => {
+  const box = document.getElementById('searchBox');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+});
+
+// Load product
 loadProduct();
+
 </script>
 </body>
-   </html>
+                                                                 </html>
